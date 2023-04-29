@@ -17,8 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	tf
 	tf2
-	cartographer_ros
-
 	)
 
 
@@ -153,10 +151,6 @@ add_executable(cmd_vel_priority src/cmd_vel_priority.cpp)
 add_executable(cmd_vel_tsukuba2022 src/cmd_vel_tsukuba2022.cpp)
 add_executable(cmd_vel_demo1125 src/cmd_vel_demo1125.cpp)
 
-add_executable(mega_pub_odom src/pub_odom.cpp)
-add_executable(mega_pub_ekf_odom src/pub_ekf_odom.cpp)
-add_executable(pub_covariance_gps src/pub_covariance_gps.cpp)
-#add_executable(mega_pub_none_odom src/pub_none_odom.cpp)
 #add_executable(waypoint waypoint.py)
 
 
@@ -209,31 +203,6 @@ target_link_libraries(pub_none_odom_tf
 #  ${catkin_LIBRARIES}
 #)
 
-target_link_libraries(mega_pub_odom
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(mega_pub_ekf_odom
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(pub_covariance_gps
-  ${catkin_LIBRARIES}
-)
-#target_link_libraries(mega_pub_none_odom
-#  ${catkin_LIBRARIES}
-#)
-
-
-
-set_target_properties(mega_pub_odom
-                      PROPERTIES OUTPUT_NAME pub_odom
-                      PREFIX "")
-	      
-set_target_properties(mega_pub_ekf_odom
-                      PROPERTIES OUTPUT_NAME pub_ekf_odom
-                      PREFIX "")
-#set_target_properties(mega_pub_none_odom
-#                      PROPERTIES OUTPUT_NAME pub_none_odom
-#                      PREFIX "")
 
 
 #############
