@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
+	<arg name="gui" default="true" />
+	<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+		<remap from="/joint_states" to="/whill/states/jointState" />
+	</node>
+	<arg name="serialport" default="$(env TTY_WHILL)"/>
+	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
+		<rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
+		<param name="keep_connected" value="true" />
+		<!-- Serial Device name -->
+		<param name="serialport" value="$(arg serialport)"/>
+		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
+		<param name="publish_tf" value="true"/>
+	</node>
+       <!--	<node name="cmd_vel_pub" pkg="sick_whill" type="cmd_vel_pub" output="screen">-->
+	       <node name="cmd_vel_pub" pkg="sick_whill" type="cmd_vel_pub0825" output="screen">
+		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
+	</node>
+	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/2_whill_joy/2_whill_joy.rviz">
+	</node>
+</launch>
