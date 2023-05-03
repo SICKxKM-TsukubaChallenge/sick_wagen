@@ -19,7 +19,10 @@
 			<param name="sw_pll_only_publish" type="bool" value="true"/>
 			<param name="min_intensity" type="double" value="0.0"/>
 			<!-- Set range of LaserScan messages to infinity, if intensity < min_intensity (default: 0) -->
-			<remap from="scan" to="tim_scan_R"/>
+			<!-- if you use sick_scan (old library)-->
+			<!-- <remap from="scan" to="tim_scan_R"/> -->
+			<!-- if you use sick_scan_xd (new library) -->
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_R"/>
 		</node>
 		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
 		<node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame" args="0.83 -0.31 0 -0.785398 0 0 base_link tim_link_R 100" />
@@ -40,7 +43,10 @@
 			<param name="sw_pll_only_publish" type="bool" value="true"/>
 			<param name="min_intensity" type="double" value="0.0"/>
 			<!-- Set range of LaserScan messages to infinity, if intensity < min_intensity (default: 0) -->
-			<remap from="scan" to="tim_scan_L"/>
+			<!-- if you use sick_scan (old library)-->
+			<!-- <remap from="scan" to="tim_scan_L"/> -->
+			<!-- if you use sick_scan_xd (new library) -->
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_L"/>
 		</node>
 		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
 		<node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame" args="0.83 0.31 0 0.785398 0 0 base_link tim_link_L 100" />
@@ -78,9 +84,10 @@
 		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
 		<param name="publish_tf" value="true"/>
 	</node>
-	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub" output="screen">
+	<!--<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub" output="screen">-->
+	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub0825" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/5_whill_tim_tim_joy/5_whill_tim_tim_joy.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/005_whill_tim_tim_joy/005_whill_tim_tim_joy.rviz"/>
 </launch>
