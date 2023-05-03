@@ -64,5 +64,5 @@
   </node>
   <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
   <node pkg="tf" type="static_transform_publisher" name="stp_laser_frame" args="0.83 0 0 0 0 0 base_link laser_link 100" />
-  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/4_tim_multi_merge/4_tim_multi_merge.rviz"/>
+  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/4_tim_multi_merge/4_tim_multi_merge.rviz"/>
 </launch>

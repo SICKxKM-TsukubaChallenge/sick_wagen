@@ -24,5 +24,5 @@
         </node>
     </group>
 
-    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/12_camera/two_cameras.rviz"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/12_camera/two_cameras.rviz"/>
 </launch>

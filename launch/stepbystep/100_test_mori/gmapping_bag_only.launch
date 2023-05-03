@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
 	<!--     EKF     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/ekf.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/ekf.launch" />
 
 	<!-- gmapping -->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" clear_params="true">
@@ -69,5 +69,5 @@
 		<param name="range_max" value="90.0"/>
 	</node>
 
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/100_test_mori/gmapping.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/100_test_mori/gmapping.rviz"/>
 </launch>

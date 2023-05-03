@@ -67,7 +67,7 @@
         <param name="ros_qos" type="int" value="-1"/>  <!-- Default QoS=-1, i.e. do not overwrite, use queue_size=10 on ROS-1 resp. qos=rclcpp::SystemDefaultsQoS() on ROS-2 -->
 
     </node>
-    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/001_tim5xx/001_tim5xx.rviz">
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/001_tim5xx/001_tim5xx.rviz">
     </node>
 </launch>
         <!--

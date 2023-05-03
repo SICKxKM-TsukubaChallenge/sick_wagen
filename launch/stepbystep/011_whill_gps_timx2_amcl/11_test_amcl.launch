@@ -38,7 +38,7 @@
 		<param name="frame_id" value="base_footprint" />
 	</node>
 
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_whill)/map/map_20220704.yaml"/>
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/map/map_20220704.yaml"/>
 
 	<!-- move_base -->
         <!--   Lidar node     --> 
@@ -146,7 +146,7 @@
 		<param name="tf_broadcast" value="true"/>
 		<!--	<remap from="initialpose" to="set_pose"/> -->
 	</node>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
 		<!-- <remap from="initialpose" to="set_pose"/>-->
 	</node>
 </launch>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(sick_whill)
+project(sick_wagen)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -111,7 +111,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	#  INCLUDE_DIRS include
-	#  LIBRARIES sick_whill
+	#  LIBRARIES sick_wagen
 	#  CATKIN_DEPENDS other_catkin_pkg
 	#  DEPENDS system_lib
 	)
@@ -129,7 +129,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/sick_whill.cpp
+#   src/${PROJECT_NAME}/sick_wagen.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -140,7 +140,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/sick_whill_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/sick_wagen_node.cpp)
 add_executable(cmd_vel_pub src/cmd_vel_pub.cpp)
 add_executable(whill_cmd_vel_pub src/whill_cmd_vel_pub.cpp)
 add_executable(cmd_vel_pub0825 src/cmd_vel_pub0825.cpp)
@@ -251,7 +251,7 @@ target_link_libraries(pub_none_odom_tf
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_sick_whill.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_sick_wagen.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

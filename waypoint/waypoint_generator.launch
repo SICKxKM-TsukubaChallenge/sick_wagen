@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <launch> 
 	<!--		 map		-->
-	     <arg name="map_file" default="$(find sick_whill)/map.yaml"/>
+	     <arg name="map_file" default="$(find sick_wagen)/map.yaml"/>
 	<!--
 	<arg name="map_file" default="~/map.yaml"/>
 -->	

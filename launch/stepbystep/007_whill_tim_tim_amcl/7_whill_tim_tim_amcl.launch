@@ -78,12 +78,12 @@
 		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
 		<param name="publish_tf" value="true"/>
 	</node>
-	<node name="cmd_vel_pub" pkg="sick_whill" type="cmd_vel_pub" output="screen">
+	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 
 	<!--		 map		-->
-	<arg name="map_file" default="$(find sick_whill)/map/map_20220819.yaml"/>
+	<arg name="map_file" default="$(find sick_wagen)/map/map_20220819.yaml"/>
 
 	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
@@ -125,5 +125,5 @@
 	</node>
 
 	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/7_whill_tim_tim_amcl/7_whill_tim_tim_amcl.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/7_whill_tim_tim_amcl/7_whill_tim_tim_amcl.rviz"/>
 </launch>

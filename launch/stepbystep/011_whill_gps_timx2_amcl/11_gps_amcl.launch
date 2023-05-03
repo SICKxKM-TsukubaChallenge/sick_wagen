@@ -34,7 +34,7 @@
 	</node>
 
 	<!-- Static map for GPS AMCL  -->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_whill)/map/garden_with_gps.yaml" output="log">
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/map/garden_with_gps.yaml" output="log">
 		<param name="frame_id" value="map" />
 	</node>
 

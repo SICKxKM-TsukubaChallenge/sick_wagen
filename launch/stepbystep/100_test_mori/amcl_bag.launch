@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <launch>
 	<!--     EKF     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/ekf.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/ekf.launch" />
 
 	<!--		 map		-->
-	<!--	<arg name="map_file" default="$(find sick_whill)/launch/stepbystep/100_test_mori/map/map_1117_3.yaml"/>
+	<!--	<arg name="map_file" default="$(find sick_wagen)/launch/stepbystep/100_test_mori/map/map_1117_3.yaml"/>
 -->
-	<arg name="map_file" default="$(find sick_whill)/launch/stepbystep/100_test_mori/map/map11202.yaml"/>
+	<arg name="map_file" default="$(find sick_wagen)/launch/stepbystep/100_test_mori/map/map11202.yaml"/>
 	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
 	<!--		amcl node		-->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/amcl.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/amcl.launch" />
 	<arg name="node_start_delay" default="5.0" />
 	<node pkg="ira_laser_tools" name="whill_laserscan_multi_merger" type="whill_laserscan_multi_merger" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
 		<param name="destination_frame" value="base_link"/>
@@ -26,5 +26,5 @@
 		<param name="range_max" value="90.0"/>
 	</node>
 
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/100_test_mori/amcl.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/100_test_mori/amcl.rviz"/>
 </launch>

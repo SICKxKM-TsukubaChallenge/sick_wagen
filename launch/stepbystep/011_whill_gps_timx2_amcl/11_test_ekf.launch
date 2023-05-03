@@ -38,7 +38,7 @@
 	</node>
 	<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
 	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0 0 1.03 0 0 0 base_link gps 100" />
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
 		<remap from="initialpose" to="set_pose"/>
 	</node>
 </launch>

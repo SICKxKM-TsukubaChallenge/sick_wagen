@@ -78,7 +78,7 @@
 		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
 		<param name="publish_tf" value="true"/>
 	</node>
-	<node name="cmd_vel_pub0825" pkg="sick_whill" type="cmd_vel_pub0825" output="screen">
+	<node name="cmd_vel_pub0825" pkg="sick_wagen" type="cmd_vel_pub0825" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 	<!-- gmapping -->
@@ -104,5 +104,5 @@
 		<param name="map_frame" value="map" />
 	</node>
 	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/6_whill_tim_tim_gmapping/6_whill_tim_tim_gmapping.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/6_whill_tim_tim_gmapping/6_whill_tim_tim_gmapping.rviz"/>
 </launch>

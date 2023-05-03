@@ -5,7 +5,7 @@
 
 
 import roslib
-# roslib.load_manifest('sick_whill')
+# roslib.load_manifest('sick_wagen')
 import rospy
 import math
 import tf

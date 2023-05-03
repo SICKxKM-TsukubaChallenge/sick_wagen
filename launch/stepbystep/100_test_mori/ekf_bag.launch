@@ -12,7 +12,7 @@
 
 	<!--     navsat transform      -->
 	<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true">
-		<rosparam command="load" file="$(find sick_whill)/launch/stepbystep/100_test_mori/navsat_transform_template.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/launch/stepbystep/100_test_mori/navsat_transform_template.yaml" />
 		<remap from="/gps/fix" to="/ublox/fix" />
 		<remap from="/odometry/filtered" to="/odometry/filtered" />
 
@@ -37,7 +37,7 @@
 				     -->
 	<!--  robot_localization  -->
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true" output="screen">
-		<rosparam command="load" file="$(find sick_whill)/launch/stepbystep/100_test_mori/ekf_template.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/launch/stepbystep/100_test_mori/ekf_template.yaml" />
 		<remap from="/odometry/filtered" to="/odometry/filtered" />
 	</node>
 

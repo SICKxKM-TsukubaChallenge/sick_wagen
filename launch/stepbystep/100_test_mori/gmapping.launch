@@ -1,15 +1,15 @@
 <?xml version="1.0" ?>
 <launch>
 	<!--     GPS     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/gps.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/gps.launch" />
 	<!--     LiDAR     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/tim_scan.launch" />
-	<!--	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/mrs_scan.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/tim_scan.launch" />
+	<!--	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/mrs_scan.launch" />
 		-->
 	<!--     Whill     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/whill.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/whill.launch" />
 	<!--     EKF     -->
-	<include file="$(find sick_whill)/launch/stepbystep/100_test_mori/ekf.launch" />
+	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/ekf.launch" />
 
 	<!-- gmapping -->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" clear_params="true">
@@ -57,5 +57,5 @@
 	</node>
 	<!--
 -->
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/100_test_mori/gmapping.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/100_test_mori/gmapping.rviz"/>
 </launch>

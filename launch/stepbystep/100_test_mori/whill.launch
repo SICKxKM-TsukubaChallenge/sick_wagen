@@ -19,9 +19,9 @@
 		<remap from="/joint_states" to="/whill/states/jointState" />
 	</node>
 	<!--
-	<node name="cmd_vel_tsukuba2022" pkg="sick_whill" type="cmd_vel_tsukuba2022" output="screen">
+	<node name="cmd_vel_tsukuba2022" pkg="sick_wagen" type="cmd_vel_tsukuba2022" output="screen">
 		-->
-	<node name="cmd_vel_demo1125" pkg="sick_whill" type="cmd_vel_demo1125" output="screen">
+	<node name="cmd_vel_demo1125" pkg="sick_wagen" type="cmd_vel_demo1125" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 

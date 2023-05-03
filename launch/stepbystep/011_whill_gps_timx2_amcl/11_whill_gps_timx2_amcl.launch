@@ -5,7 +5,7 @@
 		<rosparam command="load" file="$(find ublox_gps)/config/zed_f9p_rover.yaml" />
 	</node>
 	<!--  robot_localization  -->
-	<rosparam command="load" file="$(find sick_whill)/config/robot_localization/rover_amcl.yaml" />
+	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/rover_amcl.yaml" />
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
 		<remap from="odometry/filtered" to="odometry/filtered_map"/>
 	</node>
@@ -15,8 +15,8 @@
 		<remap from="odometry/filtered" to="odometry/filtered_map"/>
 		<remap from="gps/fix" to="ublox/fix"/>
 	</node>
-	<!--<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_whill)/launch/stepbystep/11_whill_gps_timx2_amcl/3_gps_check/map.yaml"/>-->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_whill)/map/map_20220704.yaml"/>
+	<!--<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/3_gps_check/map.yaml"/>-->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/map/map_20220704.yaml"/>
 
 	<!-- move_base -->
     
@@ -132,7 +132,7 @@
 		<param name="tf_broadcast" value="true"/>
 		<remap from="initialpose" to="set_pose"/>
 	</node>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_whill)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
 		<remap from="initialpose" to="set_pose"/>
 	</node>
 </launch>

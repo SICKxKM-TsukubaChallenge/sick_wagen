@@ -2,7 +2,7 @@
 <launch>
 	<!--  ublox launch file  -->
 	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="true" respawn="true" respawn_delay="30">
-		<rosparam command="load" file="$(find sick_whill)/config/ublox_gps/zed_f9p_whill.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/config/ublox_gps/zed_f9p_whill.yaml" />
 	</node>
 	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0 0 1.03 0 0 0 base_link gps 100" />
 
@@ -14,7 +14,7 @@
 	</node>
 	<!--  robot_localization  -->
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true" output="screen">
-		<rosparam command="load" file="$(find sick_whill)/launch/stepbystep/100_test_mori/robot_localization/ekf_robot_localization.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/launch/stepbystep/100_test_mori/robot_localization/ekf_robot_localization.yaml" />
 		<remap from="/odometry/filtered" to="/odometry/filtered" />
 		<remap from="odom0" to="/whill/odom" />
 		<remap from="odom1" to="/gps_odom" />
