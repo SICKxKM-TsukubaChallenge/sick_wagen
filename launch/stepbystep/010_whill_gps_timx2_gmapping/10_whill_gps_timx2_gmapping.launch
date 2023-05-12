@@ -1,8 +1,18 @@
 <?xml version="1.0" ?>
 <launch>
 	<!--  ublox launch file  -->
-	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="true" respawn="true" respawn_delay="30">
-		<rosparam command="load" file="$(find ublox_gps)/config/zed_f9p_rover.yaml" />
+	<arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_whill" />
+	<arg name="param_file_dir" doc="directory to look for $(arg param_file_name).yaml" default="$(find sick_wagen)/config/ublox_gps" />
+	<arg name="node_name" doc="name of this node" default="ublox" />
+	<arg name="output" default="screen" />
+	<arg name="respawn" default="true" />
+	<arg name="respawn_delay" default="30" />
+	<arg name="clear_params" default="true" />
+	<arg name="device_tty" default="$(env TTY_UBLOX)" />
+	<node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)" output="$(arg output)" clear_params="$(arg clear_params)" respawn="$(arg respawn)" respawn_delay="$(arg respawn_delay)">
+		<rosparam command="load" file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
+		<param name="device" type="string" value="$(arg device_tty)"/>
+		<param name="frame_id" type="string" value="gps"/>
 	</node>
 	<!--  robot_localization  -->
 	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/rover_amcl.yaml" />
@@ -16,61 +26,76 @@
 		<remap from="gps/fix" to="ublox/fix"/>
 	</node>
 	<group ns="tim_scans">
-		<node name="sick_tim_R" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
-			<param name="scanner_type" type="string" value="sick_tim_5xx"/>
-			<!-- -135° -->
-			<param name="min_ang" type="double" value="-1.832595715"/>
-			<!-- 135° -->
-			<param name="max_ang" type="double" value="1.832595715"/>
-			<param name="use_binary_protocol" type="bool" value="true"/>
-			<param name="range_max" type="double" value="100.0"/>
-			<param name="intensity" type="bool" value="True"/>
-			<param name="hostname" type="string" value="192.168.0.2"/>
-			<param name="cloud_topic" type="string" value="tim_cloud_R"/>
-			<param name="frame_id" type="str" value="tim_link_R"/>
-			<param name="port" type="string" value="2112"/>
-			<param name="timelimit" type="int" value="5"/>
-			<param name="sw_pll_only_publish" type="bool" value="true"/>
-			<param name="min_intensity" type="double" value="0.0"/>
-			<remap from="scan" to="tim_scan_R"/>
-		</node>
-		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-		<node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame" args="0.83 -0.31 0 -0.785398 0 0 base_link tim_link_R 100" />
-		<node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
-			<param name="scanner_type" type="string" value="sick_tim_5xx"/>
-			<!-- -135° -->
-			<param name="min_ang" type="double" value="-1.832595715"/>
-			<!-- 135° -->
-			<param name="max_ang" type="double" value="1.832595715"/>
-			<param name="use_binary_protocol" type="bool" value="true"/>
-			<param name="range_max" type="double" value="100.0"/>
-			<param name="intensity" type="bool" value="True"/>
-			<param name="hostname" type="string" value="192.168.0.3"/>
-			<param name="cloud_topic" type="string" value="tim_cloud_L"/>
-			<param name="frame_id" type="str" value="tim_link_L"/>
-			<param name="port" type="string" value="2112"/>
-			<param name="timelimit" type="int" value="5"/>
-			<param name="sw_pll_only_publish" type="bool" value="true"/>
-			<param name="min_intensity" type="double" value="0.0"/>
-			<remap from="scan" to="tim_scan_L"/>
-		</node>
-		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-		<node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame" args="0.83 0.31 0 0.785398 0 0 base_link tim_link_L 100" />
-	</group>
+      <node name="sick_tim_R" pkg="sick_scan" type="sick_generic_caller" respawn="false"
+         output="screen">
+         <param name="scanner_type" type="string" value="sick_tim_5xx" />
+         <!-- -135° -->
+         <param name="min_ang" type="double" value="-1.832595715" />
+         <!-- 135° -->
+         <param name="max_ang" type="double" value="1.832595715" />
+         <param name="use_binary_protocol" type="bool" value="true" />
+         <param name="range_max" type="double" value="100.0" />
+         <param name="intensity" type="bool" value="True" />
+         <param name="hostname" type="string" value="192.168.0.2" />
+         <param name="cloud_topic" type="string" value="tim_cloud_R" />
+         <param name="frame_id" type="str" value="tim_link_R" />
+         <param name="port" type="string" value="2112" />
+         <param name="timelimit" type="int" value="5" />
+         <param name="sw_pll_only_publish" type="bool" value="true" />
+         <param name="min_intensity" type="double" value="0.0" />
+         <!-- Set range of LaserScan messages to infinity, if intensity < min_intensity (default: 0) -->
+         <!-- if you use sick_scan (old library)-->
+         <!-- <remap from="scan" to="tim_scan_R"/> -->
+         <!-- if you use sick_scan_xd (new library) -->
+         <remap from="/sick_tim_5xx/scan" to="tim_scan_R" />
+      </node>
+      <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame"
+         args="0.83 -0.31 0 -0.785398 0 0 base_link tim_link_R 100" />
+      <node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false"
+         output="screen">
+         <param name="scanner_type" type="string" value="sick_tim_5xx" />
+         <!-- -135° -->
+         <param name="min_ang" type="double" value="-1.832595715" />
+         <!-- 135° -->
+         <param name="max_ang" type="double" value="1.832595715" />
+         <param name="use_binary_protocol" type="bool" value="true" />
+         <param name="range_max" type="double" value="100.0" />
+         <param name="intensity" type="bool" value="True" />
+         <param name="hostname" type="string" value="192.168.0.3" />
+         <param name="cloud_topic" type="string" value="tim_cloud_L" />
+         <param name="frame_id" type="str" value="tim_link_L" />
+         <param name="port" type="string" value="2112" />
+         <param name="timelimit" type="int" value="5" />
+         <param name="sw_pll_only_publish" type="bool" value="true" />
+         <param name="min_intensity" type="double" value="0.0" />
+         <!-- Set range of LaserScan messages to infinity, if intensity < min_intensity (default: 0) -->
+         <!-- if you use sick_scan (old library)-->
+         <!-- <remap from="scan" to="tim_scan_L"/> -->
+         <!-- if you use sick_scan_xd (new library) -->
+         <remap from="/sick_tim_5xx/scan" to="tim_scan_L" />
+      </node>
+      <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame"
+         args="0.83 0.31 0 0.785398 0 0 base_link tim_link_L 100" />
+      
+   </group>
 	<arg name="node_start_delay" default="5.0" />
-	<node pkg="ira_laser_tools" name="whill_laserscan_multi_merger" type="whill_laserscan_multi_merger" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
-		<param name="destination_frame" value="laser_link"/>
-		<param name="cloud_destination_topic" value="/merged_cloud"/>
-		<param name="scan_destination_topic" value="/tim_scan"/>
-		<param name="laserscan_topics" value ="/tim_scans/tim_scan_R /tim_scans/tim_scan_L" />
-		<!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
-		<param name="angle_min" value="-3.14159265"/>
-		<param name="angle_max" value="3.14159265"/>
-		<param name="angle_increment" value="0.004363323"/>
-		<param name="scan_time" value="0.02"/>
-		<param name="range_min" value="0.2"/>
-		<param name="range_max" value="60.0"/>
-	</node>
+   <node pkg="ira_laser_tools" name="whill_laserscan_multi_merger"
+      type="whill_laserscan_multi_merger" output="screen"
+      launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
+      <param name="destination_frame" value="laser_link" />
+      <param name="cloud_destination_topic" value="/merged_cloud" />
+      <param name="scan_destination_topic" value="/tim_scan" />
+      <param name="laserscan_topics" value="/tim_scans/tim_scan_R /tim_scans/tim_scan_L" />
+      <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+      <param name="angle_min" value="-3.14159265" />
+      <param name="angle_max" value="3.14159265" />
+      <param name="angle_increment" value="0.004363323" />
+      <param name="scan_time" value="0.02" />
+      <param name="range_min" value="0.2" />
+      <param name="range_max" value="60.0" />
+   </node>
 	<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
 	<node pkg="tf" type="static_transform_publisher" name="stp_laser_frame" args="0.83 0 0 0 0 0 base_link laser_link 100" />
 	<arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
