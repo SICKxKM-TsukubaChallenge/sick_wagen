@@ -1,8 +1,18 @@
 <?xml version="1.0" ?>
 <launch>
 	<!--  ublox launch file  -->
-	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="true" respawn="true" respawn_delay="30">
-		<rosparam command="load" file="$(find ublox_gps)/config/zed_f9p_rover.yaml" />
+	<arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_whill" />
+	<arg name="param_file_dir" doc="directory to look for $(arg param_file_name).yaml" default="$(find sick_wagen)/config/ublox_gps" />
+	<arg name="node_name" doc="name of this node" default="ublox" />
+	<arg name="output" default="screen" />
+	<arg name="respawn" default="true" />
+	<arg name="respawn_delay" default="30" />
+	<arg name="clear_params" default="true" />
+	<arg name="device_tty" default="$(env TTY_UBLOX)" />
+	<node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)" output="$(arg output)" clear_params="$(arg clear_params)" respawn="$(arg respawn)" respawn_delay="$(arg respawn_delay)">
+		<rosparam command="load" file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
+		<param name="device" type="string" value="$(arg device_tty)"/>
+		<param name="frame_id" type="string" value="gps"/>
 	</node>
 	<!--  robot_localization  -->
 	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/rover_amcl.yaml" />
@@ -16,7 +26,10 @@
 		<remap from="gps/fix" to="ublox/fix"/>
 	</node>
 	<!--<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/3_gps_check/map.yaml"/>-->
-	<node name="map_server" pkg="map_server" type="map_server" args="$(find sick_wagen)/map/map_20220704.yaml"/>
+	<arg name="map_file" default="$(env ROS_MAP).yaml"/>
+
+	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
 
 	<!-- move_base -->
     
@@ -132,7 +145,7 @@
 		<param name="tf_broadcast" value="true"/>
 		<remap from="initialpose" to="set_pose"/>
 	</node>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/11_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/011_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
 		<remap from="initialpose" to="set_pose"/>
 	</node>
 </launch>
