@@ -2,7 +2,7 @@
 <launch>
 	<!--  ublox launch file  -->
 	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="true" respawn="true" respawn_delay="30">
-		<rosparam command="load" file="$(find ublox_gps)/config/zed_f9p_rover.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/config/ublox_gps/zed_f9p_rover.yaml" />
 	</node>
 	<!--  robot_localization  -->
 	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/rover_amcl.yaml" />
@@ -107,30 +107,10 @@
 	</node>
 
 	<!-- two_cameras -->
-	<group ns="camera_front">
-        <node pkg="uvc_camera" name="camera0" type="uvc_camera_node" output="screen">
-            <param name="device" type="string" value="/dev/video2"/>
-            <param name="width" type="int" value="1920"/>
-            <param name="height" type="int" value="1080"/>
-            <param name="fps" type="int" value="30"/>
-            <param name="format" value="jpeg"/>
-            <param name="frame_id" value="camera_front"/>
-        </node>
-    </group>
-    <group ns="camera_back">
-        <node pkg="uvc_camera" name="camera1" type="uvc_camera_node" output="screen">
-            <param name="device" type="string" value="/dev/video0"/>
-            <param name="width" type="int" value="1280"/>
-            <param name="height" type="int" value="720"/>
-            <param name="fps" type="int" value="30"/>
-            <param name="format" value="jpeg"/>
-            <param name="frame_id" value="camera_back"/>
-        </node>
-    </group>
-
+	
 	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub0825" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/10_whill_gps_timx2_gmapping/10_whill_gps_timx2_gmapping.rviz"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/013_0723_whill_gps_timx2_gmapping_camera/13_whill_gps_timx2_gmapping_camera.rviz"/>
 </launch>
