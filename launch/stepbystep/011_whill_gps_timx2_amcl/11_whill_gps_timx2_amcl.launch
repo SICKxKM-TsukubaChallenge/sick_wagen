@@ -145,6 +145,11 @@
 		<param name="tf_broadcast" value="true"/>
 		<remap from="initialpose" to="set_pose"/>
 	</node>
+	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub0825" output="screen">
+		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
+	</node>
+
+	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
 	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/011_whill_gps_timx2_amcl/11_whill_gps_timx2_amcl.rviz">
 		<remap from="initialpose" to="set_pose"/>
 	</node>
