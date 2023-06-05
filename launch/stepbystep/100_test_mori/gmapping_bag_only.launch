@@ -55,7 +55,7 @@
 	</node>
 	
 	<arg name="node_start_delay" default="5.0" />
-	<node pkg="ira_laser_tools" name="whill_laserscan_multi_merger" type="whill_laserscan_multi_merger" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
+	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
 		<param name="destination_frame" value="base_link"/>
 		<param name="cloud_destination_topic" value="/merged2_cloud"/>
 		<param name="scan_destination_topic" value="/tim2_scan"/>

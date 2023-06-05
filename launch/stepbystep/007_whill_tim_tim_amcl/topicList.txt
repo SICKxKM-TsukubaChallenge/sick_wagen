@@ -34,5 +34,5 @@
 /whill/states/imu
 /whill/states/jointState
 /whill/states/joy
-/whill_laserscan_multi_merger/parameter_descriptions
-/whill_laserscan_multi_merger/parameter_updates
+/laserscan_multi_merger/parameter_descriptions
+/laserscan_multi_merger/parameter_updates

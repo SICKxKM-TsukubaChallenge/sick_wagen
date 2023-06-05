@@ -11,5 +11,5 @@
 /tim_scans/tim_cloud_R
 /tim_scans/tim_scan_L
 /tim_scans/tim_scan_R
-/whill_laserscan_multi_merger/parameter_descriptions
-/whill_laserscan_multi_merger/parameter_updates
+/laserscan_multi_merger/parameter_descriptions
+/laserscan_multi_merger/parameter_updates
