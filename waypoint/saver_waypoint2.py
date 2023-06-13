@@ -1,4 +1,4 @@
-#!/usr/bin/env python2  
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # 走行中に５秒おきに座標（正確にはmapからbase_linkのtf）を取得しcsvに保存するスクリプト。頻度はrospy.Rateで変えられます。起動する前に既存のcsvをrm -rfしておく必要がある。
