@@ -14,14 +14,13 @@ from sensor_msgs.msg import Joy
 import turtlesim.srv
 import csv
 
-csvfile = "sick10_1125.csv"
+csvfile = "test0724.csv"
 
 def joy_callback(msg):
     save_signal = msg.buttons[2]
     
     if save_signal:
-        
-            print "[({0},{1},0.0),(0.0,0.0,{2},{3})],".format(trans[0], trans[1], 0.0, 0.0, 0.0, rot[2], rot[3])
+            print("[({0},{1},0.0),(0.0,0.0,{2},{3})],".format(trans[0], trans[1], 0.0, 0.0, 0.0, rot[2], rot[3]))
             with open(csvfile, 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([trans[0], trans[1], 0.0, 0.0, 0.0, rot[2], rot[3]])
