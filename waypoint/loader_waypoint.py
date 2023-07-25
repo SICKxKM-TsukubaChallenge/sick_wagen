@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # csvに保存されているwaypointに沿ってmove_baseにgoalを指定するスクリプト。
@@ -36,16 +36,16 @@ def goal_pose(pose):
 if __name__ == '__main__':
 
     waypoints = []
-    with open('sick10_1125.csv', 'r') as f:
-	reader = csv.reader(f)
+    with open('test0724.csv', 'r') as f:
+        reader = csv.reader(f)
         for one_line in reader:
             #one_line = one_line.strip()
             #one_line = one_line.split(' ')
             print(one_line)
-            #forward = (float(one_line[0]), float(one_line[1]), float(one_line[2]))
-            #back = (float(one_line[3]), float(one_line[4]), float(one_line[5]), float(one_line[6]))
-            forward = (map(float, one_line)[0], map(float, one_line)[1], map(float, one_line)[2])
-            back = (map(float, one_line)[3], map(float, one_line)[4], map(float, one_line)[5], map(float, one_line)[6])
+            forward = (float(one_line[0]), float(one_line[1]), float(one_line[2]))
+            back = (float(one_line[3]), float(one_line[4]), float(one_line[5]), float(one_line[6]))
+            #forward = (map(float, one_line)[0], map(float, one_line)[1], map(float, one_line)[2])
+            #back = (map(float, one_line)[3], map(float, one_line)[4], map(float, one_line)[5], map(float, one_line)[6])
             waypoints.append([forward, back])
 
     rospy.init_node('patrol')
