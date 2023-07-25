@@ -101,3 +101,5 @@ DWAPlannerROS:
         # 元の構成に戻す
         restore_defaults: false #(bool default: false)
 
+        holonomic_robot: false
+
