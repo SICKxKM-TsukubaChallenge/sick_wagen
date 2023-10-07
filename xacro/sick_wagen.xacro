@@ -133,11 +133,11 @@
   <xacro:front_wheel_macro prefix="right_wheel" parent="base_floor" xyz="0.3 0.245 0" />
 
   <joint name="lidar_joint" type="fixed">
-    <parent link="base_floor" />
-    <child link="lidar_link" />
-    <origin xyz="0 0 0.25" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="multiscan_link" />
+    <origin xyz="0 0 1.60" rpy="0 0 0" />
   </joint>
-  <link name="lidar_link">
+  <link name="multiscan_link">
     <visual>
       <geometry>
         <cylinder radius="0.030" length="0.086" />
@@ -147,7 +147,7 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder radius="0.030" length="0.086" />
+        <cylinder radius="0.0" length="0.086" />
       </geometry>
       <origin xyz="0 0 0" rpy="0 0 0" />
     </collision>
@@ -161,6 +161,59 @@
         izx="0" izy="0" izz="0.0001125" />
     </inertial>
   </link>
+
+  <joint name="gps_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="gps" />
+    <origin xyz="0.3 0 0.70" rpy="0 0 0" />
+  </joint>
+  <link name="gps">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.10"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.10 0.10 0.030" />
+      </geometry>
+      <material name="green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.10 0.10 0.030" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0.0 0 1.00" rpy="0 0 0" />
+  </joint>
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.10"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.050 0.050 0.030" />
+      </geometry>
+      <material name="green" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.050 0.050 0.030" />
+      </geometry>
+    </collision>
+  </link>
+
   <gazebo reference="lidar_link">
     <material>Gazebo/Blue</material>
     <sensor type="ray" name="lidar">

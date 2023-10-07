@@ -131,7 +131,7 @@
 		<param name="map_frame" value="map" />
 	</node>
 
-	<node name="cmd_vel_pub" pkg="sick_wagen" type="cmd_vel_pub0825" output="screen">
+	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 

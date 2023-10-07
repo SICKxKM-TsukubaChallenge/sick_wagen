@@ -41,6 +41,15 @@
 		<param name="frame_id" type="string" value="gps"/>
 	</node>
 	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0.1 0 1.03 0 0 0 base_link gps 100" />
+   
+   <!-- imu -->
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager"/>
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager" >
+      <param name="port" value="/dev/ttyUSB-WT901C" />
+      <remap from="/imu" to="/wit/imu" />
+   </node>
+
+	<node pkg="tf" type="static_transform_publisher" name="rt_imu_frame" args="0.7 0 0.2 0 0 0 base_link imu_link 100" />
 
    <!--  Two 2D LiDAR  -->
    <group ns="tim_scans">
@@ -188,10 +197,11 @@
         <param name="io_method" value="mmap"/>
         <param name="flip_vertical" value="true" />
     </node>
+<!--
     <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
         <remap from="image" to="/usb_cam/image_raw"/>
         <param name="autosize" value="true" />
     </node>
-
-   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/017_whill_timx2_multiscan_camera_gps/017.rviz"/>
+   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/020_whill_timx2_multiscan_camera_gps_imu/020_whill_timx2_multiscan_camera_gps_imu.rviz"/>
+-->
 </launch>

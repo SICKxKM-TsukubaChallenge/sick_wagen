@@ -26,7 +26,7 @@
 			<remap from="scan" to="tim_scan_R"/>
 		</node>
 		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-		<node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame" args="0.83 -0.31 0 -0.785398 0 0 base_link tim_link_R 100" />
+		<node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame" args="0.82 -0.3 0 -0.84806208 0 0 base_link tim_link_R 100" />
 		<node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
 			<param name="scanner_type" type="string" value="sick_tim_5xx"/>
 			<!-- -135° -->
@@ -46,7 +46,7 @@
 			<remap from="scan" to="tim_scan_L"/>
 		</node>
 		<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-		<node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame" args="0.83 0.31 0 0.785398 0 0 base_link tim_link_L 100" />
+		<node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame" args="0.82 0.3 0 0.84806208 0 0 base_link tim_link_L 100" />
 	</group>
 
 

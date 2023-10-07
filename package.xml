@@ -58,7 +58,6 @@
 	<depend>amcl</depend>
         <depend>gmapping</depend>
         <depend>rviz</depend>
-        <depend>whill_cmd_vel_pub</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

@@ -4,11 +4,11 @@
     <!-- Launch sick_scansegment_xd -->
     <!-- env name="ROSCONSOLE_CONFIG_FILE" value="/tmp/rosconsole_loglevel_warn.conf" / -->
     <arg name="hostname" default="192.168.0.4"/>  <!-- IP address of multiScan136, overwrites default ip address "192.168.0.4" in sick_scansegment_xd.yaml -->
-    <arg name="udp_receiver_ip" default="192.168.0.152"/>        <!-- UDP destination IP address (ip address of udp receiver, default = 192.168.0.152), overwrites default in sick_scansegment_xd.yaml -->
+    <arg name="udp_receiver_ip" default="192.168.0.152"/>        <!-- UDP destination IP address (ip address of udp receiver), overwrites default in sick_scansegment_xd.yaml -->
     <arg name="nodename" default="sick_scansegment_xd"/>
     <arg name="publish_topic" default="/cloud" />                         <!-- ros topic to publish received msgpack data converted top PointCloud2 messages, default: "/cloud" -->
     <arg name="publish_topic_all_segments" default="/cloud_360" />        <!-- ros topic to publish PointCloud2 messages of all segments (360 deg), default: "/cloud_360" -->
-    <arg name="publish_frame_id" default="world" />                       <!-- frame id of ros PointCloud2 messages, default: "world" -->
+    <arg name="publish_frame_id" default="multiscan_link" />                       <!-- frame id of ros PointCloud2 messages, default: "world" -->
     <arg name="add_transform_xyz_rpy" default="0,0,0,0,0,0"/>
     <arg name="add_transform_check_dynamic_updates" default="false"/> <!-- Note: dynamical updates of parameter add_transform_xyz_rpy can decrease the performance and is therefor deactivated by default -->
     <arg name="laserscan_layer_filter" default="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0" /> <!-- Configuration of laserscan messages (ROS only), default: laserscan messages for layer 5 activated (elevation -0.07 degree, max number of scan points) -->
@@ -106,7 +106,39 @@
         <!-- Use "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" to activate resp. "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1" to activate laserscan messages for all 16 layers of the Multiscan136 -->
         <!-- Default is "0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0", i.e. laserscan messages for layer 5, (elevation -0.07 degree, max number of scan points) -->
         <param name="laserscan_layer_filter" type="string" value="$(arg laserscan_layer_filter)" />
-
     </node>
+
+	<node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.03 0 0 0 base_link multiscan_link 100" />
+
+	<!--     IMU Node      -->
+	<arg name="port" default="/dev/ttyACM1" />
+	<arg name="frame_id" default="imu_link" />
+	<node pkg="rt_usb_9axisimu_driver" type="rt_usb_9axisimu_driver" name="rt_usb_9axisimu_driver" required="true" output="screen">
+		<param name="port" value="$(arg port)" />
+		<param name="frame_id" value="$(arg frame_id)" />
+	</node>
+
+    <arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
+	<arg name="gui" default="true" />
+	<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+		<remap from="/joint_states" to="/whill/states/jointState" />
+	</node>
+	<arg name="serialport" default="$(env TTY_WHILL)"/>
+	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
+		<rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
+		<param name="keep_connected" value="true" />
+		<!-- Serial Device name -->
+		<param name="serialport" value="$(arg serialport)"/>
+		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
+		<param name="publish_tf" value="true"/>
+	</node>
+    <!--	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">-->
+	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
+		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
+	</node>
+	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/019_multiscan_imu_whill_joy/019_multiscan_imu_whill_joy.rviz">
+	</node>
 
 </launch>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-   <arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
+   <arg name="model" default="$(find sick_wagen)/xacro/sick_wagen_2.xacro" />
    <arg name="gui" default="true" />
    <arg name="serialport" default="$(env TTY_WHILL)" />
 
@@ -27,25 +27,35 @@
    <node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0" />
 
    <!--  GPS -->
-   <arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_whill" />
+	<arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_rover" />
 	<arg name="param_file_dir" doc="directory to look for $(arg param_file_name).yaml" default="$(find sick_wagen)/config/ublox_gps" />
 	<arg name="node_name" doc="name of this node" default="ublox" />
 	<arg name="output" default="screen" />
 	<arg name="respawn" default="true" />
 	<arg name="respawn_delay" default="30" />
 	<arg name="clear_params" default="true" />
-	<arg name="device_tty" default="$(env TTY_UBLOX)" />
+	<arg name="device_tty" default="/dev/ttyACM-UBLOX" />
 	<node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)" output="$(arg output)" clear_params="$(arg clear_params)" respawn="$(arg respawn)" respawn_delay="$(arg respawn_delay)">
 		<rosparam command="load" file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
+      <param name="sensor_link_name" type="string" value="gps_link"/>
 		<param name="device" type="string" value="$(arg device_tty)"/>
 		<param name="frame_id" type="string" value="gps"/>
 	</node>
-	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0.1 0 1.03 0 0 0 base_link gps 100" />
+	   
+   <!-- imu -->
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager"/>
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager" >
+      <param name="sensor_link_name" type="string" value="imu_link"/>
+      <param name="port" value="/dev/ttyUSB-WT901C" />
+      <remap from="/imu" to="/wit/imu" />
+   </node>
 
+	
    <!--  Two 2D LiDAR  -->
    <group ns="tim_scans">
       <node name="sick_tim_R" pkg="sick_scan" type="sick_generic_caller" respawn="false"
          output="screen">
+         <param name="sensor_link_name" type="string" value="tim_link_R"/>
          <param name="scanner_type" type="string" value="sick_tim_5xx" />
          <!-- -135° -->
          <param name="min_ang" type="double" value="-1.832595715" />
@@ -54,7 +64,7 @@
          <param name="use_binary_protocol" type="bool" value="true" />
          <param name="range_max" type="double" value="100.0" />
          <param name="intensity" type="bool" value="True" />
-         <param name="hostname" type="string" value="192.168.0.2" />
+         <param name="hostname" type="string" value="192.168.0.3" />
          <param name="cloud_topic" type="string" value="tim_cloud_R" />
          <param name="frame_id" type="str" value="tim_link_R" />
          <param name="port" type="string" value="2112" />
@@ -67,11 +77,10 @@
          <!-- if you use sick_scan_xd (new library) -->
          <remap from="/sick_tim_5xx/scan" to="tim_scan_R" />
       </node>
-      <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-      <node pkg="tf" type="static_transform_publisher" name="stp_tim_R_frame"
-         args="0.83 -0.31 0 -0.785398 0 0 base_link tim_link_R 100" />
+
       <node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false"
          output="screen">
+         <param name="sensor_link_name" type="string" value="tim_link_L"/>
          <param name="scanner_type" type="string" value="sick_tim_5xx" />
          <!-- -135° -->
          <param name="min_ang" type="double" value="-1.832595715" />
@@ -80,7 +89,7 @@
          <param name="use_binary_protocol" type="bool" value="true" />
          <param name="range_max" type="double" value="100.0" />
          <param name="intensity" type="bool" value="True" />
-         <param name="hostname" type="string" value="192.168.0.3" />
+         <param name="hostname" type="string" value="192.168.0.2" />
          <param name="cloud_topic" type="string" value="tim_cloud_L" />
          <param name="frame_id" type="str" value="tim_link_L" />
          <param name="port" type="string" value="2112" />
@@ -93,10 +102,7 @@
          <!-- if you use sick_scan_xd (new library) -->
          <remap from="/sick_tim_5xx/scan" to="tim_scan_L" />
       </node>
-      <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-      <node pkg="tf" type="static_transform_publisher" name="stp_tim_L_frame"
-         args="0.83 0.31 0 0.785398 0 0 base_link tim_link_L 100" />
-      
+
    </group>
 
    <arg name="node_start_delay" default="5.0" />
@@ -115,9 +121,7 @@
       <param name="range_min" value="0.2" />
       <param name="range_max" value="60.0" />
    </node>
-   <!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
-   <node pkg="tf" type="static_transform_publisher" name="stp_laser_frame"
-      args="0.83 0 0 0 0 0 base_link laser_link 100" />
+
 
    <!-- Launch sick_scansegment_xd -->
    <node name="sick_scansegment_xd" pkg="sick_scan" type="sick_generic_caller" respawn="false"
@@ -176,13 +180,14 @@
       <param name="laserscan_layer_filter" type="string" value="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0" />
    </node>
 
-	<node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.03 0 0 0 base_link multiscan_link 100" />
+	<!-- <node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.03 0 0 -3.14 base_link multiscan_link 100" /> -->
+	<node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.6 0 0 0 base_link multiscan_link 100" />
 
    <!-- camera -->
     <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
         <param name="video_device" value="/dev/video2" />
-        <param name="image_width" value="640" />
-        <param name="image_height" value="360" />
+        <param name="image_width" value="1920" />
+        <param name="image_height" value="1080" />
         <param name="pixel_format" value="mjpeg" />
         <param name="camera_frame_id" value="usb_cam" />
         <param name="io_method" value="mmap"/>
@@ -193,5 +198,9 @@
         <param name="autosize" value="true" />
     </node>
 
-   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/017_whill_timx2_multiscan_camera_gps/017.rviz"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/020_whill_timx2_multiscan_camera_gps_imu/020_whill_timx2_multiscan_camera_gps_imu.rviz"/>
+<!--
+   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/020_whill_timx2_multiscan_camera_gps_imu/020_whill_timx2_multiscan_camera_gps_imu.rviz"/>
+-->
 </launch>
+  

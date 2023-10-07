@@ -36,7 +36,7 @@ def goal_pose(pose):
 if __name__ == '__main__':
 
     waypoints = []
-    with open('test0724.csv', 'r') as f:
+    with open('test20230905.csv', 'r') as f:
         reader = csv.reader(f)
         for one_line in reader:
             #one_line = one_line.strip()

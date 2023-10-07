@@ -141,13 +141,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/sick_wagen_node.cpp)
-add_executable(cmd_vel_pub src/cmd_vel_pub.cpp)
-add_executable(whill_cmd_vel_pub src/whill_cmd_vel_pub.cpp)
-add_executable(cmd_vel_pub0825 src/cmd_vel_pub0825.cpp)
+add_executable(wagen_controller src/wagen_controller.cpp)
 add_executable(nav_goal_listener src/nav_goal_listener.cpp)
 add_executable(pub_none_odom_tf src/pub_none_odom_tf.cpp)
 
-add_executable(cmd_vel_priority src/cmd_vel_priority.cpp)
 add_executable(cmd_vel_tsukuba2022 src/cmd_vel_tsukuba2022.cpp)
 add_executable(cmd_vel_demo1125 src/cmd_vel_demo1125.cpp)
 
@@ -176,17 +173,7 @@ target_link_libraries(cmd_vel_demo1125
 	${catkin_LIBRARIES}
 	)
 
-target_link_libraries(cmd_vel_pub
-	${catkin_LIBRARIES}
-	)
-target_link_libraries(whill_cmd_vel_pub
-	${catkin_LIBRARIES}
-	)
-target_link_libraries(cmd_vel_pub0825
-	${catkin_LIBRARIES}
-	)
-
-target_link_libraries(cmd_vel_priority
+target_link_libraries(wagen_controller
 	${catkin_LIBRARIES}
 	)
 

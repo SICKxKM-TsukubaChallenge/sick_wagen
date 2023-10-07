@@ -27,20 +27,29 @@
    <node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0" />
 
    <!--  GPS -->
-   <arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_whill" />
+	<arg name="param_file_name" doc="name of param file, e.g. rover" default="zed_f9p_rover" />
 	<arg name="param_file_dir" doc="directory to look for $(arg param_file_name).yaml" default="$(find sick_wagen)/config/ublox_gps" />
 	<arg name="node_name" doc="name of this node" default="ublox" />
 	<arg name="output" default="screen" />
 	<arg name="respawn" default="true" />
 	<arg name="respawn_delay" default="30" />
 	<arg name="clear_params" default="true" />
-	<arg name="device_tty" default="$(env TTY_UBLOX)" />
+	<arg name="device_tty" default="/dev/ttyACM-UBLOX" />
 	<node pkg="ublox_gps" type="ublox_gps" name="$(arg node_name)" output="$(arg output)" clear_params="$(arg clear_params)" respawn="$(arg respawn)" respawn_delay="$(arg respawn_delay)">
 		<rosparam command="load" file="$(arg param_file_dir)/$(arg param_file_name).yaml" />
 		<param name="device" type="string" value="$(arg device_tty)"/>
 		<param name="frame_id" type="string" value="gps"/>
 	</node>
 	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0.1 0 1.03 0 0 0 base_link gps 100" />
+   
+   <!-- imu -->
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager"/>
+   <node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager" >
+      <param name="port" value="/dev/ttyUSB-WT901C" />
+      <remap from="/imu" to="/wit/imu" />
+   </node>
+
+	<node pkg="tf" type="static_transform_publisher" name="rt_imu_frame" args="0.7 0 0.2 0 0 0 base_link imu_link 100" />
 
    <!--  Two 2D LiDAR  -->
    <group ns="tim_scans">
@@ -176,13 +185,14 @@
       <param name="laserscan_layer_filter" type="string" value="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0" />
    </node>
 
-	<node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.03 0 0 0 base_link multiscan_link 100" />
+	<!-- <node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.03 0 0 -3.14 base_link multiscan_link 100" /> -->
+	<node pkg="tf" type="static_transform_publisher" name="stp_multiscan_frame" args="0.1 0 1.6 0 0 0 base_link multiscan_link 100" />
 
    <!-- camera -->
     <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
         <param name="video_device" value="/dev/video2" />
-        <param name="image_width" value="640" />
-        <param name="image_height" value="360" />
+        <param name="image_width" value="1920" />
+        <param name="image_height" value="1080" />
         <param name="pixel_format" value="mjpeg" />
         <param name="camera_frame_id" value="usb_cam" />
         <param name="io_method" value="mmap"/>
@@ -193,5 +203,9 @@
         <param name="autosize" value="true" />
     </node>
 
-   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/017_whill_timx2_multiscan_camera_gps/017.rviz"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/020_whill_timx2_multiscan_camera_gps_imu/020_whill_timx2_multiscan_camera_gps_imu.rviz"/>
+<!--
+   <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/020_whill_timx2_multiscan_camera_gps_imu/020_whill_timx2_multiscan_camera_gps_imu.rviz"/>
+-->
 </launch>
+  
