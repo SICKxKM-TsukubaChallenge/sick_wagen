@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="hostname" default="192.168.0.2"/>
+    <arg name="hostname" default="TIM_RIGHT_IP"/>
     <arg name="cloud_topic" default="cloud"/>
     <arg name="frame_id" default="cloud"/>
     <arg name="sw_pll_only_publish" default="true"/>

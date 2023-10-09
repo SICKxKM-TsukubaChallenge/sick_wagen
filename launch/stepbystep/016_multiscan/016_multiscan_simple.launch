@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    
+
     <arg name="udp_receiver_ip" default="$(env ROS_MASTER_PC_IP)" />
     <node name="multiScan" pkg="sick_scan" type="sick_generic_caller" respawn="false"
         output="screen" required="true">
@@ -62,37 +62,6 @@
             value="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1" />
         <param name="ros_qos" type="int" value="-1" />
         <param name="laserscan_layer_filter" type="string" value="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0" />
-    </node>
-
-
-    <!--     IMU Node      -->
-    <node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager" />
-    <node pkg="nodelet" type="nodelet" output="screen" name="wit"
-        args="load wit_node/WitNodelet wit_nodelet_manager">
-        <param name="port" value="/dev/ttyUSB-WT901C" />
-    </node>
-
-	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/sick_wagen.xacro"/>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
-        <remap from="/joint_states" to="/whill/states/jointState" />
-    </node>
-
-    <node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
-        <rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
-        <param name="keep_connected" value="true" />
-        <!-- Serial Device name -->
-        <param name="serialport" value="/dev/ttyUSB-WHILL" />
-        <!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to
-        "false" -->
-        <param name="publish_tf" value="true" />
-    </node>
-
-    <node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
-        <remap from="cmd_vel" to="/whill/controller/cmd_vel" />
-    </node>
-    <node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0" />
-    <node pkg="rviz" type="rviz" name="rviz" required="true"
-        args="-d $(find sick_wagen)/launch/stepbystep/019_multiscan_imu_whill_joy/019_multiscan_imu_whill_joy.rviz">
     </node>
 
 </launch>
