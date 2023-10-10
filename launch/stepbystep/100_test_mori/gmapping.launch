@@ -4,8 +4,7 @@
 	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/gps.launch" />
 	<!--     LiDAR     -->
 	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/tim_scan.launch" />
-	<!--	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/mrs_scan.launch" />
-		-->
+	<!--	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/mrs_scan.launch" /> -->
 	<!--     Whill     -->
 	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/whill.launch" />
 	<!--     EKF     -->

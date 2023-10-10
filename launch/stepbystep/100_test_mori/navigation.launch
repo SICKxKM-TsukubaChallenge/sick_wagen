@@ -20,7 +20,9 @@
 		<remap from="map" to="map_movebase" />
 		<remap from="static_map" to="static_map_movebase" />
 	</node>
-
+  imu0_nodelay: false
+  imu0_differential: false
+  imu0_relative: false
 	<!--		amcl node		-->
 	<include file="$(find sick_wagen)/launch/stepbystep/100_test_mori/amcl.launch" />
 
