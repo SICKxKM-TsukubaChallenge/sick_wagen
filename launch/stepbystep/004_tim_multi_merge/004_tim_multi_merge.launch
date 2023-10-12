@@ -63,7 +63,8 @@
     <param name="range_min" value="0.2"/>
     <param name="range_max" value="60.0"/>
   </node>
-  <param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/sick_wagen.xacro"/>
+  <arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
+	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/$(arg xacro_file)"/>
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
 		<remap from="/joint_states" to="/whill/states/jointState" />
 	</node>

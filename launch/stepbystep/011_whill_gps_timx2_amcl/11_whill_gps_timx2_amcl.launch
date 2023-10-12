@@ -91,9 +91,8 @@
 	</node>
 	<!-- x[m] y[m] z[m] yaw(z)[rad] pitch(y)[rad] roll(x)[rad] -->
 	<node pkg="tf" type="static_transform_publisher" name="stp_laser_frame" args="0.83 0 0 0 0 0 base_link laser_link 100" />
-	<arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
-	<arg name="gui" default="true" />
-	<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
+	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/$(arg xacro_file)"/>
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
 		<remap from="/joint_states" to="/whill/states/jointState" />
 	</node>

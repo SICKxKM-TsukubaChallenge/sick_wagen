@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
-	<arg name="model" default="$(find ros_whill)/xacro/modelc.xacro" />
-	<arg name="gui" default="true" />
-	<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
+	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/$(arg xacro_file)"/>
 
 	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
 		<rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
