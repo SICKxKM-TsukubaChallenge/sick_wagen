@@ -22,7 +22,7 @@
 			<!--
 			<remap from="scan" to="tim_scan_R"/>
 			-->
-		    <remap from="/sick_tim_5xx/scan" to="tim_scan_R"/>
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_R"/>
 		</node>
 		<node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
 			<param name="scanner_type" type="string" value="sick_tim_5xx"/>
@@ -44,7 +44,7 @@
 			<!--
 			<remap from="scan" to="tim_scan_L"/>
 			-->
-	    	<remap from="/sick_tim_5xx/scan" to="tim_scan_L"/>
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_L"/>
 		</node>
 	</group>
 

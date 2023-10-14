@@ -22,7 +22,7 @@
 			<!--
 			<remap from="scan" to="tim_scan_R"/>
 			-->
-		    <remap from="/sick_tim_5xx/scan" to="tim_scan_R"/>
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_R"/>
 		</node>
 		<node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
 			<param name="scanner_type" type="string" value="sick_tim_5xx"/>
@@ -44,7 +44,7 @@
 			<!--
 			<remap from="scan" to="tim_scan_L"/>
 			-->
-	    	<remap from="/sick_tim_5xx/scan" to="tim_scan_L"/>
+			<remap from="/sick_tim_5xx/scan" to="tim_scan_L"/>
 		</node>
 	</group>
 
@@ -125,7 +125,8 @@
 	<arg name="odom_topic" default="odom" />
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" args="/cmd_vel:=/whill/controller/cmd_vel">
 		<rosparam file="$(find sick_wagen)/config/config1007/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find sick_wagen)/config/config1007/costmap_common_params.yaml" command="load" ns="local_costmap" />.
+		<rosparam file="$(find sick_wagen)/config/config1007/costmap_common_params.yaml" command="load" ns="local_costmap" />
+.
 		<rosparam file="$(find sick_wagen)/config/config1007/local_costmap_params_amcl.yaml" command="load" />
 		<rosparam file="$(find sick_wagen)/config/config1007/global_costmap_params.yaml" command="load" />
 		<rosparam file="$(find sick_wagen)/config/config1007/move_base_params.yaml" command="load" />
@@ -140,6 +141,6 @@
 		<remap from="odom" to="whill/odom" />
 	</node>
 
-	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/> 
+	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
 	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/008_whill_timx2_movebase/008_whill_timx2_movebase.rviz"/>
 </launch>
