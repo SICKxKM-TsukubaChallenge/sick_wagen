@@ -32,9 +32,10 @@
 			  <rosparam file="$(find sick_wagen)/config/tsukuba2022/move_base_params.yaml" command="load" />
 			  <rosparam file="$(find sick_wagen)/config/tsukuba2022/base_local_planner_params.yaml" command="load" />
 		  -->
-				  <!-- prevent the occurrence of the error, "control loop missed its desired rate of ..."-->
 
-
+   <!--		 map		-->
+   <arg name="map_file" default="$(env ROS_MAP).yaml"/>
+   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
    <!--  MCL 3DL  -->
   <arg name="config_file" default="$(find mcl_3dl)/config/test_localization.yaml"
