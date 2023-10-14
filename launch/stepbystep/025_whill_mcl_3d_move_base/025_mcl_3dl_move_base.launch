@@ -13,7 +13,7 @@
   <arg name="map_offset_y" default="0.0" />
 
 
-	  <!--		move base		-->
+  <!--		move base		-->
   <arg name="odom_topic" default="odom" />
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" args="/cmd_vel:=/whill/controller/cmd_vel">
 	  <rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -22,7 +22,6 @@
 	  <rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/global_costmap_params.yaml" command="load" />
 	  <rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/move_base_params.yaml" command="load" />
 	  <rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/dwa_local_planner_params.yaml" command="load" />
-
 
 	  <param name="controller_frequency" value="5.0" />
 	  <remap from="cmd_vel" to="/cmd_vel_move_base" />
@@ -34,7 +33,7 @@
 		  -->
 
    <!--		 map		-->
-   <arg name="map_file" default="$(env ROS_MAP).yaml"/>
+   <arg name="map_file" default="$(env ROS_2D_MAP).yaml"/>
    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
    <!--  MCL 3DL  -->
@@ -52,7 +51,7 @@
     /cloud    (Measured pointcloud)
     /odom     (Wheel odometry)
   -->
-  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/023_whill_mcl_3d_gmapping/023_rviz.rviz" />
+  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/025_whill_mcl_3d_move_base/025_rviz.rviz" />
 	  <!-- <node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen" unless="$(arg generate_test_bag)"> -->
   <node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen">
     <param name="compatible" value="1" />
@@ -127,9 +126,8 @@
    </node>
 
 	<!-- GPS to odometry -->
-	<node pkg="tf" type="static_transform_publisher" name="stp_gps_frame" args="0 0 1.03 0 0 0 base_link gps 100" />
 	<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" respawn="true">
-		<rosparam command="load" file="$(find pubsub)/launch/navsat_all.yaml" />
+		<rosparam command="load" file="$(find sick_wagen)/config/navsat/navsat_all.yaml" />
 		<remap from="gps/fix" to="ublox/fix"/>
 		<remap from="imu/data" to="wit/imu"/>
 		<remap from="odometry/filtered" to="/whill/odom"/>
