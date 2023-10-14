@@ -13,7 +13,7 @@
 		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
 		<param name="publish_tf" value="true"/>
 	</node>
-    <!--	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">-->
+	<!--	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">-->
 	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>

@@ -104,8 +104,7 @@
 		<param name="map_frame" value="map" />
 	</node>
 
-	<!-- two_cameras -->
-	
+	<!-- camera -->
 	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
