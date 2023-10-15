@@ -48,9 +48,11 @@ class GoToWaypoint(smach.State):
                 # Check the type of waypoint (0: normal, 1: stop, 2: signal)
                 if status == 0:
                     self.index += 1
+                    print("Next")
                     return 'next_waypoint'
                 elif status == 1:
                     self.index += 1
+                    print("Stop location")
                     return 'stop_required'
                 elif status == 2:
                     self.index += 1
@@ -66,7 +68,10 @@ class TemporaryStop(smach.State):
         smach.State.__init__(self, outcomes=['done'])
 
     def execute(self, userdata):
+        print("Plz push button")
         # ここで一時停止のロジックを実装...
+
+        print("Next")
         return 'done'
 
 class WaitForSignal(smach.State):
@@ -78,14 +83,13 @@ class WaitForSignal(smach.State):
         return 'done'
 
 def main():
-    print("main()")
+    print("Navigation")
     
-    waypoints = load_waypoints_from_csv('test0724.csv')
-    print("finish load_waypoint" + str(waypoints))
+    waypoints = load_waypoints_from_csv('sick10_1015.csv')
+    print("finish load_waypoint")
 
     rospy.init_node('navigation_smach')
-    print("finish init_node")
-    
+
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['success', 'failure'])    
     # Open the container
@@ -108,10 +112,12 @@ def main():
     sis.start()
 
     # Execute SMACH plan
+    print("Start Navigation!!")
     outcome = sm.execute()
 
     rospy.spin()
     sis.stop()
+    print("End of navigation")
 
 if __name__ == '__main__':
     main()
