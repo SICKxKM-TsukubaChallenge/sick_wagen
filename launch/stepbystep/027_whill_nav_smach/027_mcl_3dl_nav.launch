@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-	<!-- <node pkg="sick_wagen" type="navigation_smach.py" name="navigation_smach" required="true" output="screen" /> -->
+	<node pkg="sick_wagen" type="navigation_smach.py" name="navigation_smach" required="true" output="screen" />
 	<node pkg="sick_wagen" type="joy2call.py" name="joy2call" required="true" output="screen" />
 
 	<!--		move base		-->

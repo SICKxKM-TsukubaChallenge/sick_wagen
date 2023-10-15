@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import rospy
 import actionlib
 import csv
@@ -19,7 +18,6 @@ def load_waypoints_from_csv(filename):
 			pose = list(map(float, row[:7]))
 			status = int(row[7])
 			waypoints.append((pose, status))
-		print("waypoint num: ",len(waypoints))
 	return waypoints
 
 class WaypointManager:
@@ -110,17 +108,15 @@ def main():
 	# Create a SMACH state machine
 	sm = smach.StateMachine(outcomes=['success', 'failure'])    
 	# Open the container
+
 	with sm:
-		print("hogehoge")
+		smach.StateMachine.add('TEMPORARY_STOP', TemporaryStop(),
+						transitions={'done': 'GOTO_WAYPOINT'})
 		smach.StateMachine.add('GOTO_WAYPOINT', GoToWaypoint(waypoints),
-							   transitions={'next_waypoint': 'GOTO_WAYPOINT',
+							transitions={'next_waypoint': 'GOTO_WAYPOINT',
 											'stop_required': 'TEMPORARY_STOP',
 											'signal_required': 'WAIT_FOR_SIGNAL',
 											'error': 'GOTO_WAYPOINT'})
-		print("finish GOTO_WAYPOINT")
-		smach.StateMachine.add('TEMPORARY_STOP', TemporaryStop(),
-							   transitions={'done': 'GOTO_WAYPOINT'})
-
 		smach.StateMachine.add('WAIT_FOR_SIGNAL', WaitForSignal(),
 							   transitions={'done': 'GOTO_WAYPOINT'})
 	print("finish StateMachine setting")
