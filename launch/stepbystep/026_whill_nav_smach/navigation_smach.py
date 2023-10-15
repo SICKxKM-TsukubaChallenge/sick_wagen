@@ -5,6 +5,7 @@ import csv
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import smach
 import smach_ros
+from std_srvs.srv import Empty, EmptyResponse
 
 # WaypointをCSVファイルから読み込む関数
 def load_waypoints_from_csv(filename):
@@ -66,13 +67,22 @@ class GoToWaypoint(smach.State):
 class TemporaryStop(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['done'])
+        self.trigger_received = False
+        self.srv = rospy.Service('restart', Empty, self.handle_restart)
+
+    def handle_restart(self, req):
+        rospy.loginfo("Restart service called. Robot will continue.")
+        self.trigger_received = True
+        return EmptyResponse()
 
     def execute(self, userdata):
-        print("Plz push button")
-        # ここで一時停止のロジックを実装...
-
-        print("Next")
-        return 'done'
+        rospy.loginfo("Robot is temporarily stopped. Waiting for external trigger to continue...")
+        rate = rospy.Rate(10)  # 10Hz
+        while not rospy.is_shutdown():
+            if self.trigger_received:
+                self.trigger_received = False  # Reset the trigger flag for next time
+                return 'done'
+            rate.sleep()
 
 class WaitForSignal(smach.State):
     def __init__(self):
