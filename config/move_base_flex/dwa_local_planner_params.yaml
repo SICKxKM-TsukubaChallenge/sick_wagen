@@ -15,16 +15,16 @@ DWAPlannerROS:
         min_vel_y: 0.0 #(double, default: -0.1) y軸方向に動けないロボットの場合は0にする
 
         # 最大, 最小旋回速度(rad/s)
-        max_vel_theta: 0.8 #(double, default: 1.0)
+        max_vel_theta: 1.0 #(double, default: 1.0)
         min_vel_theta: 0.1 #(double, default: 0.4)
 
         ####
         # 目標許容パラメータ
         ####
         # 目標に到達した時のロボットのyaw回転に置けるradの許容値 = 向きの許容誤差
-        yaw_goal_tolerance: 0.1 #(double, default: 0.05)
+        yaw_goal_tolerance: 0.05 #(double, default: 0.05)
         # 目標に到達した時のロボットのx,y方向の距離に置けるm単位の許容誤差 = 位置の許容誤差
-        xy_goal_tolerance: 0.15    #(double, default: 0.10)
+        xy_goal_tolerance: 0.3    #(double, default: 0.10)
         # ロボットが停止しているとみなされる並進速度以下の速度
         trans_stopped_vel: 0.1 #(double, default: 0.1)
         theta_stopped_vel: 0.1 #(double, default: 0.1)

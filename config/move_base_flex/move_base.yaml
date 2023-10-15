@@ -1,10 +1,5 @@
-planners:
-  - name: NavfnROS
-    type: navfn/NavfnROS
-
-controllers:
-  - name: DWAPlannerROS
-    type: dwa_local_planner/DWAPlannerROS
+# local planner - default is trajectory rollout
+base_local_planner: "dwa_local_planner/DWAPlannerROS"
 
 controller_frequency: 30.0
 controller_patience: 15.0
@@ -12,5 +7,5 @@ controller_patience: 15.0
 planner_frequency: 2.0
 planner_patience: 15.0
 
-oscillation_timeout: 10.0
+oscillation_timeout: 20.0
 oscillation_distance: 0.2
