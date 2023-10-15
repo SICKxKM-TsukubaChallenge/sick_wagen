@@ -1,23 +1,22 @@
 <?xml version="1.0"?>
 <launch>
-	<!-- move base -->
-	<node name="move_base_flex" pkg="mbf_costmap_nav" type="mbf_costmap_nav" required="false" respawn="true" output="screen">
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/local_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/move_base.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_flex/dwa_local_planner_params.yaml" command="load" />
+	<!-- <node pkg="sick_wagen" type="waypoint_saver.py" name="waypoint_saver" required="true" output="screen" /> -->
+	<!--		move base		-->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/move_base_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/dwa_local_planner_params.yaml" command="load" />
 		<param name="controller_frequency" value="5.0" />
 		<remap from="cmd_vel" to="/cmd_vel_move_base" />
 		<remap from="odom" to="whill/odom" />
 	</node>
-	<node name="smach" pkg="sick_wagen" type="smach-test.py" respawn="true" />
-	<node name="smach_viwer" pkg="smach_viewer" type="smach_viewer.py" respawn="true" />
 
 	<!-- map -->
 	<arg name="map_file" default="$(env ROS_MAP).yaml"/>
-	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" required="true" />
+	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
 	<!-- MCL 3DL -->
 	<arg name="map_pcd" default="$(env ROS_3D_MAP)"/>
@@ -27,7 +26,7 @@
 
 	<!--  MCL 3DL  -->
 	<rosparam command="load" file="$(find sick_wagen)/config/mcl_3dl/mcl_3dl.yaml"/>
-	<node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen" respawn="true">
+	<node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen">
 		<param name="compatible" value="1" />
 		<remap from="/imu/data" to="/wit/imu" />
 		<remap from="/cloud" to="/cloud_360" />
@@ -37,12 +36,12 @@
 	<!-- xacro -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
 	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/$(arg xacro_file)"/>
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true">
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
 		<remap from="/joint_states" to="/whill/states/jointState" />
 	</node>
 
 	<!-- ros whill   -->
-	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen" respawn="true">
+	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
 		<rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
 		<param name="keep_connected" value="true" />
 		<!-- Serial Device name -->
@@ -52,12 +51,12 @@
 	</node>
 
 	<!--  command vel controller  -->
-	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen" respawn="true">
+	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
 		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
 	</node>
 
 	<!--  Joy stick  -->
-	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0" respawn="true"/>
+	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
 
 	<!--  GPS -->
 	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="false" respawn="true" respawn_delay="30">
@@ -67,8 +66,8 @@
 	</node>
 
 	<!-- imu -->
-	<node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager" respawn="true" respawn_delay="10" />
-	<node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager" respawn="true" respawn_delay="10">
+	<node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager" />
+	<node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager">
 		<param name="port" value="/dev/ttyUSB-WT901C" />
 		<remap from="/imu" to="/wit/imu" />
 	</node>
@@ -83,7 +82,7 @@
 
 	<!--  robot_localization  -->
 	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/whill_mcl_3dl.yaml" />
-	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true" respawn="true">
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
 		<remap from="imu0" to="/wit/imu"/>
 		<remap from="odom" to="/whill/odom"/>
 		<remap from="odom_gps" to="/odometry/gps"/>
@@ -91,65 +90,9 @@
 	</node>
 
 	<!--  LiDAR   -->
-
-	<!--  Two 2D LiDAR  -->
-	<group ns="tim_scans">
-		<node name="sick_tim_R" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
-			<param name="scanner_type" type="string" value="sick_tim_5xx" />
-			<!-- -135° -->
-			<param name="min_ang" type="double" value="-1.832595715" />
-			<!-- 135° -->
-			<param name="max_ang" type="double" value="1.832595715" />
-			<param name="use_binary_protocol" type="bool" value="true" />
-			<param name="range_max" type="double" value="100.0" />
-			<param name="intensity" type="bool" value="True" />
-			<param name="hostname" type="string" value="TIM_RIGHT_IP" />
-			<param name="cloud_topic" type="string" value="tim_cloud_R" />
-			<param name="frame_id" type="str" value="tim_link_R" />
-			<param name="port" type="string" value="2112" />
-			<param name="timelimit" type="int" value="5" />
-			<param name="sw_pll_only_publish" type="bool" value="true" />
-			<param name="min_intensity" type="double" value="0.0" />
-			<remap from="/sick_tim_5xx/scan" to="tim_scan_R" />
-		</node>
-		<node name="sick_tim_L" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
-			<param name="scanner_type" type="string" value="sick_tim_5xx" />
-			<!-- -135° -->
-			<param name="min_ang" type="double" value="-1.832595715" />
-			<!-- 135° -->
-			<param name="max_ang" type="double" value="1.832595715" />
-			<param name="use_binary_protocol" type="bool" value="true" />
-			<param name="range_max" type="double" value="100.0" />
-			<param name="intensity" type="bool" value="True" />
-			<param name="hostname" type="string" value="TIM_LEFT_IP" />
-			<param name="cloud_topic" type="string" value="tim_cloud_L" />
-			<param name="frame_id" type="str" value="tim_link_L" />
-			<param name="port" type="string" value="2112" />
-			<param name="timelimit" type="int" value="5" />
-			<param name="sw_pll_only_publish" type="bool" value="true" />
-			<param name="min_intensity" type="double" value="0.0" />
-			<remap from="/sick_tim_5xx/scan" to="tim_scan_L" />
-		</node>
-	</group>
-
-	<arg name="node_start_delay" default="5.0" />
-	<node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'">
-		<param name="destination_frame" value="laser_link" />
-		<param name="cloud_destination_topic" value="/merged_cloud" />
-		<param name="scan_destination_topic" value="/tim_scan" />
-		<param name="laserscan_topics" value="/tim_scans/tim_scan_R /tim_scans/tim_scan_L" />
-		<!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
-		<param name="angle_min" value="-3.14159265" />
-		<param name="angle_max" value="3.14159265" />
-		<param name="angle_increment" value="0.004363323" />
-		<param name="scan_time" value="0.02" />
-		<param name="range_min" value="0.2" />
-		<param name="range_max" value="60.0" />
-	</node>
-
 	<!--  multiScan   -->
 	<arg name="udp_receiver_ip" default="$(env ROS_MASTER_PC_IP)" />
-	<node name="multiScan" pkg="sick_scan" type="sick_generic_caller" required="false" respawn="true" output="screen" respawn_delay="10">
+	<node name="multiScan" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen" required="true">
 		<param name="scanner_type" type="string" value="sick_multiscan" />
 		<!-- network settings: -->
 		<param name="hostname" type="string" value="MULTISCAN_IP" />
@@ -207,5 +150,5 @@
 		<param name="ros_qos" type="int" value="-1" />
 		<param name="laserscan_layer_filter" type="string" value="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0" />
 	</node>
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/027_mcl3dl_mbf_smach/027.rviz" />
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/026_whill_waypoint_save/026.rviz" />
 </launch>
