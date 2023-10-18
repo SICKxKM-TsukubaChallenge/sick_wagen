@@ -15,7 +15,7 @@
 		<param name="frame_id" type="string" value="gps"/>
 	</node>
 	<!--  robot_localization  -->
-	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/rover_amcl.yaml" />
+	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/whill_amcl.yaml" />
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
 		<remap from="odometry/filtered" to="odometry/filtered_map"/>
 	</node>

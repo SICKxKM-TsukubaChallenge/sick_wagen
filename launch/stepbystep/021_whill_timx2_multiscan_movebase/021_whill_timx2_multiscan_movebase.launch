@@ -185,13 +185,13 @@
 	<!-- move base -->
 	<arg name="odom_topic" default="odom" />
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<rosparam file="$(find sick_wagen)/config/config20231010/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find sick_wagen)/config/config20231010/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
 .
-		<rosparam file="$(find sick_wagen)/config/config20231010/local_costmap_params_amcl.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config20231010/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config20231010/move_base_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config20231010/dwa_local_planner_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/local_costmap_params_amcl.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/move_base_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/dwa_local_planner_params.yaml" command="load" />
 		<!--
 		<rosparam file="$(find sick_wagen)/config/tsukuba2022/move_base_params.yaml" command="load" />
 		<rosparam file="$(find sick_wagen)/config/tsukuba2022/base_local_planner_params.yaml" command="load" />

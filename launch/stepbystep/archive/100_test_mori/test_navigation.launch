@@ -15,12 +15,12 @@
 	 <!-- <arg name="cmd_vel_topic" default="cmd_vel_nav" /> -->
 	<arg name="odom_topic" default="odom" />
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" args="/cmd_vel:=/whill/controller/cmd_vel">
-		<rosparam file="$(find sick_wagen)/config/config1007/move_base_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config1007/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find sick_wagen)/config/config1007/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find sick_wagen)/config/config1007/local_costmap_params_amcl.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config1007/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/config1007/dwa_local_planner_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/move_base_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find sick_wagen)/config/move_base/local_costmap_params_amcl.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find sick_wagen)/config/move_base/dwa_local_planner_params.yaml" command="load" />
 		<!-- prevent the occurrence of the error, "control loop missed its desired rate of ..."-->
 		<param name="controller_frequency" value="5.0" />
 		<remap from="cmd_vel" to="$(arg cmd_vel_topic)" />
