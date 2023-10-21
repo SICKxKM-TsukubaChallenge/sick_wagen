@@ -117,10 +117,10 @@
 		<param name="send_udp_start" type="bool" value="False" />
 		<param name="send_udp_start_string" type="string" value="magicalActivate" />
 		<param name="udp_timeout_ms" type="int" value="60000" />
-		<param name="range_min" type="double" value="0.3" />
+		<param name="range_min" type="double" value="1" />
 		<param name="range_max" type="double" value="100.0" />
 		<param name="range_filter_handling" type="int" value="1" />
-		<param name="add_transform_xyz_rpy" type="string" value="0,0,0,0,0,0" />
+		<param name="add_transform_xyz_rpy" type="string" value="0,0,0,3.14,0,0" />
 		<param name="add_transform_check_dynamic_updates" type="bool" value="false" />
 		<!-- SOPAS settings: -->
 		<param name="sopas_tcp_port" type="string" value="2111" />
@@ -174,10 +174,6 @@
 		output="screen">
 		<remap from="/pointcloud" to="/cloud_360" />
 		<remap from="/pointcloud_out" to="/multiscan_xyz" />
-	</node>
-	<node name="pointconverter_tim" pkg="sick_wagen" type="subscriber_tim.py" output="screen">
-		<remap from="/pointcloud" to="/merged_cloud" />
-		<remap from="/pointcloud_out" to="/merged_cloud_xyz" />
 	</node>
 	<!-- Launch PointCloud2 concatenator node -->
 	<node pkg="pointcloud_concatenate" type="pointcloud_concatenate_node" name="pc_concat"
