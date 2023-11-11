@@ -14,23 +14,23 @@ ekf_localization_node:
   world_frame: odom # GNSSやmcl_3dを使うため
   publish_tf: true
 
-  # odom0: /odometry/gps
-  # odom0_config: [true,  true,  false, # x, y, z 位置
-  #                false, false, false, # 回転
-  #                false, false, false, # 速度
-  #                false, false, false, # 角速度
-  #                false, false, false] # 加速度
-  # odom0_queue_size: 3
-  # odom0_nodelay: false
-  # odom0_differential: false
-  # odom0_relative: false
-  # odom0_rejection_threshold: 2
+  odom0: /odometry/gps
+  odom0_config: [false, false,  false, # x, y, z 位置
+                 false, false, false, # 回転
+                 true, true, false, # 速度
+                 false, false, false, # 角速度
+                 false, false, false] # 加速度
+  odom0_queue_size: 3
+  odom0_nodelay: false
+  odom0_differential: false
+  odom0_relative: false
+  odom0_rejection_threshold: 2
 
   odom1: /whill/odom
-  odom1_config: [true,  true,  false, # x, y, z 位置
+  odom1_config: [false, false, false, # x, y, z 位置
                  false, false, false, # 回転
-                 false, false, false, # 速度
-                 false, false, false, # 角速度
+                 true, false, false, # 速度
+                 false, false, true, # 角速度
                  false, false, false] # 加速度
   odom1_queue_size: 3
   odom1_nodelay: false
@@ -38,13 +38,24 @@ ekf_localization_node:
   odom1_relative: false
   odom1_rejection_threshold: 2
 
+  # odom2: /amcl_pose
+  # odom2_config: [true, true, true, # x, y, z 位置
+  #                true, true, true, # 回転
+  #                false,false,false, # 速度
+  #                false,false, false, # 角速度
+  #                false,false,false] # 加速度
+  # odom2_queue_size: 3
+  # odom2_nodelay: false
+  # odom2_differential: false
+  # odom2_relative: false
+  # odom2_rejection_threshold: 2
 
-  imu0: /wit/imu
-  imu0_config: [false, false,  false, # x, y, z 位置
-                true, true, true, # 回転
-                false, false, false, # 速度
-                true, true, true, # 角速度
-                true, true, true] # 加速度
+  # imu0: /wit/imu
+  # imu0_config: [false, false,  false, # x, y, z 位置
+  #               false, false, false, # 回転
+  #               false, false, false, # 速度
+  #               true, true, true, # 角速度
+  #               true, true, false] # 加速度
 
   use_control: false
   #x, y, z, roll, pitch, yaw, vel x, vel y, vel z, vel roll, vel pitch, vel yaw, acc x, acc y, acc z
