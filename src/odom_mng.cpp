@@ -3,7 +3,7 @@
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 
-static std::string gps_topic = "/odometry/gps";
+static std::string gps_topic = "/odometry/filtered";
 static std::string whill_topic = "/whill/odom";
 static std::string pub_topic = "/odometry/selected";
 
@@ -29,7 +29,7 @@ int main(int argc,char **argv){
     while (ros::ok())
     {
         nav_msgs::Odometry msg;
-        if(current_gps_odom.pose.covariance[0]>cov_MAX_){
+        if(current_gps_odom.pose.covariance[0]<cov_MAX_){
             msg = current_gps_odom;
         }
         else{
