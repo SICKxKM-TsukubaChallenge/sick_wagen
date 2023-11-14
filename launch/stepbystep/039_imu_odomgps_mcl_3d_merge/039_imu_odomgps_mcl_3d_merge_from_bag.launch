@@ -3,7 +3,7 @@
 	<param name="/use_sim_time" value="true" />
 
 	<arg name="bag_file" />
-	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 4.0"  launch-prefix="bash -c 'sleep 1.0; $0 $@'" />
+	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 4.0"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
 
 	<!-- xacro   -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
@@ -39,9 +39,9 @@
 		<param name="compatible" value="1" />
 		<remap from="/imu/data" to="/wit/imu" />
 		<remap from="/cloud" to="/cloud_concatenated" />
-		<!-- <remap from="/odom" to="/odometry/filtered" /> -->
+		<remap from="/odom" to="/odometry/filtered" />
 		<!-- <remap from="/odom" to="/whill/odom" /> -->
-		<remap from="/odom" to="/odometry/selected" />
+		<!-- <remap from="/odom" to="/odometry/selected" /> -->
 	</node>
 
 	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/039_imu_odomgps_mcl_3d_merge/039.rviz">
