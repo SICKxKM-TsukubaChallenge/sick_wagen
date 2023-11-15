@@ -3,7 +3,7 @@
 	<param name="/use_sim_time" value="true" />
 
 	<arg name="bag_file" />
-	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 4.0"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
+	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 1.0"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
 
 	<!-- xacro   -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
@@ -31,9 +31,10 @@
 		<remap from="cloud_pcd" to="mapcloud" />
 	</node>
 
-	<node pkg="sick_wagen" type="odom_mng" name="odom_manager">
+	<!-- <node pkg="sick_wagen" type="odom_mng" name="odom_manager">
 		<param name="cov_Max" value="10" />
-	</node>
+	</node> -->
+	
 	<rosparam command="load" file="$(find sick_wagen)/config/mcl_3dl/mcl_3dl.yaml" />
 	<node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen">
 		<param name="compatible" value="1" />
