@@ -6,7 +6,7 @@ mcl_3dl:
   num_particles: 256 ##256
   publish_tf: true
   output_pcd: false
-  map_chunk: 20.0
+  map_chunk: 10.0
   tf_tolerance: 0.05
   skip_measure: 1
   lpf_step: 3 #0.9
@@ -44,7 +44,6 @@ mcl_3dl:
   odom_err_integ_lin_tc: 10.0
   odom_err_integ_lin_sigma: 100.0
   odom_err_integ_ang_tc: 10.0
-  odom_err_integ_lin_sigma: 100.0
   init_var_x: 0.6
   init_var_y: 0.6
   init_var_z: 0.01
