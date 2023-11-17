@@ -4,9 +4,12 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /PoseArray1
+        - /PointCloud21
         - /PointCloud21/Autocompute Value Bounds1
         - /PointCloud22/Autocompute Value Bounds1
+        - /PointCloud25
       Splitter Ratio: 0.49042099714279175
     Tree Height: 795
   - Class: rviz/Selection
@@ -147,8 +150,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 7.828373908996582
-        Min Value: 1.199794054031372
+        Max Value: 8.814000129699707
+        Min Value: -0.6984137296676636
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -172,14 +175,40 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.20000000298023224
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 1
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.10000000149011612
+      Style: Flat Squares
+      Topic: /mapcloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /mcl_3dl/debug_marker
       Name: MarkerArray
       Namespaces:
-        Ray collisions: true
-        Rays: true
-        Sample points: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -280,8 +309,6 @@ Visualization Manager:
           Value: true
         camera_link:
           Value: true
-        floor:
-          Value: true
         frontwheel_left:
           Value: true
         frontwheel_right:
@@ -318,8 +345,6 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          floor:
-            {}
           odom:
             base_link:
               base_floor:
@@ -379,7 +404,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 15.570573806762695
+      Distance: 148.41188049316406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -395,9 +420,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.2097960710525513
+      Pitch: 1.124796748161316
       Target Frame: base_link
-      Yaw: 5.869978427886963
+      Yaw: 5.849976539611816
     Saved: ~
 Window Geometry:
   Displays:

@@ -30,7 +30,7 @@
 		<param name="vo_used" value="true"/>
 		<param name="debug" value="false"/>
 		<param name="self_diagnose" value="false"/>
-		<remap from="vo" to="gps_odom" />
+		<remap from="updatedOdomGPS" to="gps_odom" />
 		<remap from="odom" to="/whill/odom" />
 	</node>
 

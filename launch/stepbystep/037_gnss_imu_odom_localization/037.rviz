@@ -154,8 +154,6 @@ Visualization Manager:
           Value: true
         camera_link:
           Value: true
-        floor:
-          Value: true
         frontwheel_left:
           Value: true
         frontwheel_right:
@@ -172,7 +170,7 @@ Visualization Manager:
           Value: true
         multiscan_link:
           Value: true
-        odom_filtered:
+        odom:
           Value: true
         right_wheel_link:
           Value: true
@@ -190,9 +188,7 @@ Visualization Manager:
       Show Names: true
       Tree:
         map:
-          floor:
-            {}
-          odom_filtered:
+          odom:
             base_link:
               base_floor:
                 frontwheel_left:
@@ -323,7 +319,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: odom_filtered
+    Fixed Frame: odom
     Frame Rate: 10
   Name: root
   Tools:
@@ -347,7 +343,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 113.45179748535156
+      Distance: 1702.638427734375
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1

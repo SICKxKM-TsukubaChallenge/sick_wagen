@@ -3,6 +3,8 @@
 
 	<arg name="map_pcd" default="$(env ROS_3D_MAP)"/>
 	<node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud" args="$(arg map_pcd)">
+		<param name="frame_id" type="string" value="map" />
+		<param name="latch" type="bool" value="True" />
 		<remap from="cloud_pcd" to="mapcloud" />
 	</node>
 
@@ -12,7 +14,7 @@
 		<param name="compatible" value="1" />
 		<remap from="/imu/data" to="/wit/imu" />
 		<remap from="/cloud" to="/cloud_concatenated" />
-		<remap from="/odom" to="/whill/odom" />
+		<remap from="/odom" to="/odometry/filtered_map" />
 	</node>
 
 	<!-- xacro   -->
@@ -63,7 +65,7 @@
 	</node>
 
 	<!--  robot_localization  -->
-	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/whill_mcl_3dl.yaml" />
+	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/whill_mcl_3dl_old.yaml" />
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_map" clear_params="true">
 		<remap from="imu0" to="/wit/imu"/>
 		<remap from="odom" to="/whill/odom"/>
@@ -71,8 +73,10 @@
 		<remap from="odometry/filtered" to="odometry/filtered_map"/>
 	</node>
 
+	<!-- real machine -->
 	<!--  LiDAR   -->
 	<!--  multiScan   -->
+	
 	<arg name="udp_receiver_ip" default="$(env ROS_MASTER_PC_IP)" />
 	<node name="multiScan" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen" required="true">
 		<param name="scanner_type" type="string" value="sick_multiscan" />

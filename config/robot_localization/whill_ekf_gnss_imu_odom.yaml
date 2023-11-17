@@ -15,9 +15,9 @@ ekf_localization_node:
   publish_tf: true
 
   odom0: /odometry/gps
-  odom0_config: [true, true,  false, # x, y, z 位置
+  odom0_config: [false, false,  false, # x, y, z 位置
                  false, false, false, # 回転
-                 false, false, false, # 速度
+                 true, true, false, # 速度
                  false, false, false, # 角速度
                  false, false, false] # 加速度
   odom0_queue_size: 10
@@ -25,10 +25,10 @@ ekf_localization_node:
 
 
   odom1: /whill/odom
-  odom1_config: [false, false, false, # x, y, z 位置
-                 false, false, true, # 回転
+  odom1_config: [true, true, false, # x, y, z 位置
+                 false, false, false, # 回転
                  true, false, false, # 速度
-                 false, false, false, # 角速度
+                 false, false, true, # 角速度
                  false, false, false] # 加速度
   odom1_queue_size: 10
   odom1_differential: false
