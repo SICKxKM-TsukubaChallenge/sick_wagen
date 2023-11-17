@@ -149,6 +149,7 @@ add_executable(odom2tf src/odom2tf.cpp)
 add_executable(odom_mng src/odom_mng.cpp)
 add_executable(cmd_vel_tsukuba2022 src/cmd_vel_tsukuba2022.cpp)
 add_executable(cmd_vel_demo1125 src/cmd_vel_demo1125.cpp)
+add_executable(covariance_modifier src/covariance_modifier.cpp)
 
 #add_executable(waypoint waypoint.py)
 
@@ -191,7 +192,10 @@ target_link_libraries(pub_none_odom_tf
 target_link_libraries(odom2tf
 	${catkin_LIBRARIES}
 	)
-	target_link_libraries(odom_mng
+target_link_libraries(odom_mng
+	${catkin_LIBRARIES}
+	)
+target_link_libraries(covariance_modifier
 	${catkin_LIBRARIES}
 	)
 #target_link_libraries(waypoint

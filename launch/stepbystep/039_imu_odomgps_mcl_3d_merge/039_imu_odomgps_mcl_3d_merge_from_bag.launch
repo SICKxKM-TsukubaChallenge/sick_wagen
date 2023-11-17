@@ -34,6 +34,7 @@
 	<!-- <node pkg="sick_wagen" type="odom_mng" name="odom_manager">
 		<param name="cov_Max" value="10" />
 	</node> -->
+	<node pkg="sick_wagen" type="covariance_modifier" name="covariance_modifier"/>
 	
 	<rosparam command="load" file="$(find sick_wagen)/config/mcl_3dl/mcl_3dl.yaml" />
 	<node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen">
