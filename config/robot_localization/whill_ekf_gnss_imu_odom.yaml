@@ -1,6 +1,6 @@
 # For parameter descriptions, please refer to the template parameter files for each node.
 ekf_localization_node:
-  frequency: 10
+  frequency: 5
   sensor_timeout: 0.1
   two_d_mode: true
   transform_time_offset: 0.0
@@ -25,9 +25,9 @@ ekf_localization_node:
 
 
   odom1: /whill/odom
-  odom1_config: [true, true, false, # x, y, z 位置
+  odom1_config: [false, false, false, # x, y, z 位置
                  false, false, true, # 回転
-                 false, false, false, # 速度
+                 true, false, false, # 速度
                  false, false, false, # 角速度
                  false, false, false] # 加速度
   odom1_queue_size: 10
@@ -52,7 +52,7 @@ ekf_localization_node:
                 true, true, true, # 角速度
                 true, true, true] # 加速度
   imu0_differential: false
-  imu0_queue_size: 50
+  imu0_queue_size: 10
   imu0_remove_gravitational_acceleration: true
 
 

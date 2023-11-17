@@ -10,7 +10,7 @@
 
 	<!--  robot_localization  -->
 	<!-- GPS to odometry -->
-	<rosparam command="load" file="$(find sick_wagen)/config/robot_localization/whill_ekf_gnss_imu_odom.yaml" />
+	<rosparam command="load" file="$(find sick_wagen)/config/navsat/navsat_all.yaml" />
 	<node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" respawn="true">
 		<remap from="gps/fix" to="ublox/fix"/>
 		<remap from="imu/data" to="wit/imu"/>

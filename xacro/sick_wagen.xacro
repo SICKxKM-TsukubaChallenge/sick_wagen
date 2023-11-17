@@ -320,7 +320,7 @@
   <joint name="imu_joint" type="fixed">
     <parent link="base_link" />
     <child link="imu_link" />
-    <origin xyz="-0.14 0 1.05" rpy="0 0 0" />
+    <origin xyz="0.47 0 0.26" rpy="0 0 0" />
   </joint>
   <link name="imu_link">
     <inertial>
@@ -347,7 +347,7 @@
   <joint name="camera_joint" type="fixed">
     <parent link="base_link" />
     <child link="camera_link" />
-    <origin xyz="-0.14 0 1.40" rpy="0 0 0" />
+    <origin xyz="-0.14 0 1.35" rpy="0 0 0" />
   </joint>
   <link name="camera_link">
     <inertial>
@@ -374,7 +374,7 @@
   <joint name="gps_joint" type="fixed">
     <parent link="base_link" />
     <child link="gps_link" />
-    <origin xyz="0.12 0.25 1.03" rpy="0 0 0" />
+    <origin xyz="-0.10 -0.15 1.42" rpy="0 0 0" />
   </joint>
   <link name="gps_link">
     <inertial>
