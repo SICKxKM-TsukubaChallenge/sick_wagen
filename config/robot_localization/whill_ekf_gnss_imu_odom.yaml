@@ -20,17 +20,17 @@ ekf_localization_node:
                  true, true, false, # 速度
                  false, false, false, # 角速度
                  false, false, false] # 加速度
-  odom0_queue_size: 10
+  odom0_queue_size: 2
   odom0_differential: false
 
 
   odom1: /whill/odom
-  odom1_config: [true, true, false, # x, y, z 位置
-                 false, false, false, # 回転
-                 true, false, false, # 速度
+  odom1_config: [true, true, false, # x, y, z 位置    s 
+                 false, false, true, # 回転
+                 true, true, false, # 速度
                  false, false, true, # 角速度
                  false, false, false] # 加速度
-  odom1_queue_size: 10
+  odom1_queue_size: 2
   odom1_differential: false
 
   # odom2: /amcl_pose
@@ -47,12 +47,12 @@ ekf_localization_node:
 
   imu0: /wit/imu
   imu0_config: [false, false,  false, # x, y, z 位置
-                false , false, false, # 回転
+                false , false, true, # 回転
                 false, false, false, # 速度
-                true, true, true, # 角速度
-                true, true, true] # 加速度
-  imu0_differential: false
-  imu0_queue_size: 10
+                false, false, true, # 角速度
+                false, false, false] # 加速度
+  imu0_differential: true
+  imu0_queue_size: 5
   imu0_remove_gravitational_acceleration: true
 
 

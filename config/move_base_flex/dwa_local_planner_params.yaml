@@ -22,7 +22,7 @@ DWAPlannerROS:
         # 目標許容パラメータ
         ####
         # 目標に到達した時のロボットのyaw回転に置けるradの許容値 = 向きの許容誤差
-        yaw_goal_tolerance: 0.05 #(double, default: 0.05)
+        yaw_goal_tolerance: 0.2 #(double, default: 0.05)
         # 目標に到達した時のロボットのx,y方向の距離に置けるm単位の許容誤差 = 位置の許容誤差
         xy_goal_tolerance: 0.3    #(double, default: 0.10)
         # ロボットが停止しているとみなされる並進速度以下の速度

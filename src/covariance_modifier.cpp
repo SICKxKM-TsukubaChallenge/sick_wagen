@@ -8,10 +8,10 @@ void odomCallback(nav_msgs::Odometry msg)
 {
     msg.pose.covariance[0] = 0.01;
     msg.pose.covariance[7] = 0.01;
-    msg.pose.covariance[14] = 0.01;
-    msg.pose.covariance[21] = 0.1;
-    msg.pose.covariance[28] = 0.1;
-    msg.pose.covariance[35] = 0.1;
+    msg.pose.covariance[14] = 99999;
+    msg.pose.covariance[21] = 99999;
+    msg.pose.covariance[28] = 99999;
+    msg.pose.covariance[35] = 0.03;
     pub.publish(msg);
 }
 

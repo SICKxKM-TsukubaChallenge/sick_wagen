@@ -3,7 +3,7 @@
 	<param name="/use_sim_time" value="true" />
 
 	<arg name="bag_file" />
-	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 2.0"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
+	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 2.0 -s 150"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
 
 	<!-- xacro   -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
@@ -34,6 +34,8 @@
 	<!-- <node pkg="sick_wagen" type="odom_mng" name="odom_manager">
 		<param name="cov_Max" value="10" />
 	</node> -->
+	
+	<!-- changing number of covariance of rosbag -->
 	<node pkg="sick_wagen" type="covariance_modifier" name="covariance_modifier"/>
 	
 	<rosparam command="load" file="$(find sick_wagen)/config/mcl_3dl/mcl_3dl.yaml" />
@@ -47,6 +49,6 @@
 	</node>
 
 	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/039_imu_odomgps_mcl_3d_merge/039.rviz">
-		<remap from="initialpose" to="set_pose"/>
+		<!-- <remap from="initialpose" to="set_pose"/> -->
 	</node>
 </launch>
