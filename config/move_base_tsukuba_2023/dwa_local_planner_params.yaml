@@ -46,7 +46,7 @@ DWAPlannerROS:
         vth_samples: 20 #(integer, default: 20)
         # このコントローラーが呼び出される周期(Hz).
         # move_base経由でこのプランナーが使用される場合、move_baseのcontroller_frequencyが優先されるため未設定でもよい
-        controller_frequency: 30.0 #(double, default: 20.0)
+        controller_frequency: 20.0 #(double, default: 20.0)
 
         ####
         # 軌道スコアリングパラメータ

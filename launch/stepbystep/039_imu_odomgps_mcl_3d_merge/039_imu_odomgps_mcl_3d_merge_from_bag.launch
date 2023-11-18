@@ -3,7 +3,7 @@
 	<param name="/use_sim_time" value="true" />
 
 	<arg name="bag_file" />
-	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 2.0 -s 150"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
+	<node pkg="rosbag" type="play" name="playback" args="--clock $(arg bag_file) -r 2.0"  launch-prefix="bash -c 'sleep 2.0; $0 $@'" />
 
 	<!-- xacro   -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>

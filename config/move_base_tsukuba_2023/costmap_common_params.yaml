@@ -4,7 +4,7 @@ footprint: [[0.95, -0.40], [-0.35, -0.40], [-0.35, 0.40],[0.95, 0.40]] # ロボ�
 #footprint: [[1.00, -0.50], [-0.4, -0.5], [-0.4, 0.5],[1.00, 0.50]]
 #footprint: [[0.95, -0.40], [-0.35, -0.45], [-0.35, 0.45],[0.95, 0.40]]
 inflation_radius: 0.2 #0.2 # コストマップをinflation_radiusの距離分膨張させる
-transform_tolerance: 0.5    # tf変換の最大レイテンシー
+transform_tolerance: 1    # tf変換の最大レイテンシー
 observation_sources: tim multiscan
 tim: {sensor_frame: base_link, data_type: LaserScan, topic: tim_scan, marking: true, clearing: true}
 multiscan: {sensor_frame: base_link, data_type: PointCloud2, topic: cloud_360, marking: true, clearing: true}  
