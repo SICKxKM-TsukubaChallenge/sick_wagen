@@ -86,7 +86,7 @@ class WaypointVisualizer:
 				self.publisher.publish(id_marker)
 
 	def run(self):
-			rate = rospy.Rate(10)  # 10Hz
+			rate = rospy.Rate(1)  # 10Hz
 			while not rospy.is_shutdown():
 				self.read_waypoints_from_csv(self.csv_file_path )
 				rate.sleep()
@@ -95,7 +95,10 @@ if __name__ == '__main__':
 	try:
 		rospy.init_node('waypoint_viewer', anonymous=True)
 		ROS_WAYPOINT_FILE = os.getenv('ROS_WAYPOINT_FILE')
-		visualizer = WaypointVisualizer(ROS_WAYPOINT_FILE)
+		if ROS_WAYPOINT_FILE is None:
+			print(f"WARNING Environment variable 'ROS_WAYPOINT_FILE' not found")
+			rospy.signal_shutdown()
+			visualizer = WaypointVisualizer(ROS_WAYPOINT_FILE)
 		visualizer.run()
 	except rospy.ROSInterruptException:
 		pass
