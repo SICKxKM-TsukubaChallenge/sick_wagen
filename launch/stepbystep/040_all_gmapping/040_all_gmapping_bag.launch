@@ -1,31 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-	<!-- <node pkg="sick_wagen" type="navigation_smach.py" name="navigation_smach" required="true" output="screen" /> -->
-	<node pkg="sick_wagen" type="joy2call.py" name="joy2call" required="true" output="screen" />
-	<node pkg="sick_wagen" type="waypoint_viewer.py" name="waypoint_viewer" required="true" output="screen" />
-
-	<!-- map -->
-	<arg name="map_file" default="$(env ROS_MAP).yaml"/>
-	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
 	<!-- xacro   -->
 	<arg name="xacro_file" default="$(env SICK_WAGEN_XACRO)"/>
 	<param name="robot_description" command="$(find xacro)/xacro $(find sick_wagen)/xacro/$(arg xacro_file)"/>
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
 		<remap from="/joint_states" to="/whill/states/jointState" />
-	</node>
-
-	<!--		move base		-->
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" >
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/local_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/move_base_params.yaml" command="load" />
-		<rosparam file="$(find sick_wagen)/config/move_base_tsukuba_2023/dwa_local_planner_params.yaml" command="load" />
-		<param name="controller_frequency" value="5.0" />
-		<remap from="cmd_vel" to="/cmd_vel_move_base" />
-		<remap from="odom" to="whill/odom" />
 	</node>
 
 	<!--  robot_localization  -->
@@ -48,38 +28,6 @@
 		<param name="frame_id" type="string" value="map" />
 		<param name="latch" type="bool" value="True" />
 		<remap from="cloud_pcd" to="mapcloud" />
-	</node>
-
-	<!--  Joy stick  -->
-	<node name="joy_node" pkg="joy" type="joy_node" args="_dev:=/dev/input/js0"/>
-
-	<!-- ros whill   -->
-	<node pkg="ros_whill" type="ros_whill" name="whill" output="screen">
-		<rosparam file="$(find ros_whill)/params/initial_speedprofile.yaml" command="load" />
-		<param name="keep_connected" value="true" />
-		<!-- Serial Device name -->
-		<param name="serialport" value="/dev/ttyUSB-WHILL"/>
-		<!-- Output Odometry tf or not. If other node publishes odom->base_link tf, Change value to "false" -->
-		<param name="publish_tf" value="false"/>
-	</node>
-
-	<!--  command vel controller  -->
-	<node name="wagen_controller" pkg="sick_wagen" type="wagen_controller" output="screen">
-		<remap from="cmd_vel" to="/whill/controller/cmd_vel"/>
-	</node>t
-
-	<!--  GPS -->
-	<node pkg="ublox_gps" type="ublox_gps" name="ublox" output="screen" clear_params="false" respawn="true" respawn_delay="30">
-		<rosparam command="load" file="$(find sick_wagen)/config/ublox_gps/zed_f9p_whill.yaml" />
-		<param name="device" type="string" value="/dev/ttyACM-UBLOX" />
-		<param name="frame_id" type="string" value="gps_link" />
-	</node>
-
-	<!-- imu -->
-	<node pkg="nodelet" type="nodelet" output="screen" name="wit_nodelet_manager" args="manager" />
-	<node pkg="nodelet" type="nodelet" output="screen" name="wit" args="load wit_node/WitNodelet wit_nodelet_manager">
-		<param name="port" value="/dev/ttyUSB-WT901C" />
-		<remap from="/imu" to="/wit/imu" />
 	</node>
 
 	<!--  LiDAR   -->
@@ -225,5 +173,5 @@
 		<remap from="/odom" to="/odometry/filtered" />
 	</node>
 
-	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/041_all_movebase_flex/041.rviz" />
+	<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find sick_wagen)/launch/stepbystep/040_all_gmapping/040.rviz" />
 </launch>

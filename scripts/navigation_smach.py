@@ -7,6 +7,7 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import smach
 import smach_ros
 from std_srvs.srv import Empty, EmptyResponse
+import time
 
 # WaypointをCSVファイルから読み込む関数
 def load_waypoints_from_csv(filename):
@@ -44,8 +45,10 @@ class GoToWaypoint(smach.State):
 			goal.target_pose.pose.position.x, goal.target_pose.pose.position.y, goal.target_pose.pose.position.z = pose[:3]
 			goal.target_pose.pose.orientation.x, goal.target_pose.pose.orientation.y, goal.target_pose.pose.orientation.z, goal.target_pose.pose.orientation.w = pose[3:7]
 			self.client.send_goal(goal)
+
 			self.client.wait_for_result()
 			result = self.client.get_state()
+			time.sleep(0.5)
 			if result == actionlib.GoalStatus.SUCCEEDED:
 				# Check the type of waypoint (0: normal, 1: stop, 2: signal)
 				if status == 0:

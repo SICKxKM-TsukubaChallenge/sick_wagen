@@ -6,11 +6,11 @@ DWAPlannerROS:
 
         # 最大、最小並進速度(m/s)
         max_vel_trans: 0.55 #(double, default: 0.55) ロボットが直線上を移動するときの最大速度?
-        min_vel_trans: 0.1  #(double, default: 0.1) 負の値を設定すると後退動作が可能になる。
+        min_vel_trans: 0.3  #(double, default: 0.1) 負の値を設定すると後退動作が可能になる。
 
         # 座標軸毎の最大速度、最小速度(m/s)
         max_vel_x: 0.55 #(double, default: 0.55) x軸方向の移動速度=max_vel_transと同値にする
-        min_vel_x: -0.1  #(double, default: 0.0) 負の値を設定すると後退動作が可能になる。
+        min_vel_x: -0.3  #(double, default: 0.0) 負の値を設定すると後退動作が可能になる。
         max_vel_y: 0.0  #(double, default: 0.1) y軸方向に動けないロボットの場合は0にする
         min_vel_y: 0.0 #(double, default: -0.1) y軸方向に動けないロボットの場合は0にする
 
@@ -22,7 +22,7 @@ DWAPlannerROS:
         # 目標許容パラメータ
         ####
         # 目標に到達した時のロボットのyaw回転に置けるradの許容値 = 向きの許容誤差
-        yaw_goal_tolerance: 0.5236 # 30deg (double, default: 0.05)
+        yaw_goal_tolerance: 1.5236 # 30deg (double, default: 0.05)
         # 目標に到達した時のロボットのx,y方向の距離に置けるm単位の許容誤差 = 位置の許容誤差
         xy_goal_tolerance: 0.15    #(double, default: 0.10)
         # ロボットが停止しているとみなされる並進速度以下の速度

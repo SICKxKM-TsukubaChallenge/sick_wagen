@@ -82,6 +82,7 @@ class WaypointVisualizer:
 				oz, ow = float(row[5]), float(row[6])
 				waypointType = int(row[7])
 				pose_marker, id_marker = self.create_marker([x, y, oz, ow, waypointType], index)
+				print(str(index) + ' ' + str(x) + ', ' + str(y))
 				self.publisher.publish(pose_marker)
 				self.publisher.publish(id_marker)
 
@@ -98,7 +99,9 @@ if __name__ == '__main__':
 		if ROS_WAYPOINT_FILE is None:
 			print(f"WARNING Environment variable 'ROS_WAYPOINT_FILE' not found")
 			rospy.signal_shutdown()
-			visualizer = WaypointVisualizer(ROS_WAYPOINT_FILE)
+
+		print('waypoint file : ' + ROS_WAYPOINT_FILE)
+		visualizer = WaypointVisualizer(ROS_WAYPOINT_FILE)
 		visualizer.run()
 	except rospy.ROSInterruptException:
 		pass
